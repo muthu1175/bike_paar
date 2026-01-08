@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/ai_prev_button_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- soft gradient (left-to-right) for "back" button -->
+    <gradient
+        android:startColor="#3BD6FF"
+        android:endColor="#6A33FF"
+        android:angle="0" />
+    <corners android:radius="30dp" />
+    <padding
+        android:left="14dp"
+        android:right="14dp"
+        android:top="8dp"
+        android:bottom="8dp" />
+    <!-- subtle inner shadow effect using stroke with low alpha -->
+    <stroke android:width="1dp" android:color="#33FFFFFF" />
+</shape>

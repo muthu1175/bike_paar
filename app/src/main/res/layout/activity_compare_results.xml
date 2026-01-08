@@ -1,0 +1,1508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F4F6"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="#F3F4F6">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:scaleType="center"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="#111827" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Comparison Results"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#111827"
+                android:paddingStart="16dp" />
+        </LinearLayout>
+
+        <!-- Bikes Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:background="#F3F4F6">
+
+            <!-- Bike 1 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:layout_marginEnd="4dp"
+                    app:cardCornerRadius="8dp">
+
+                    <ImageView
+                        android:id="@+id/ivBike1"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/sample_bike"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/tvBike1Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bike 1"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#111827"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:id="@+id/tvBike1Price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹ 0"
+                        android:textSize="10sp"
+                        android:textColor="#EA580C"
+                        android:textStyle="bold"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Bike 2 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingHorizontal="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    app:cardCornerRadius="8dp">
+
+                    <ImageView
+                        android:id="@+id/ivBike2"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/sample_bike"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/tvBike2Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bike 2"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#111827"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:id="@+id/tvBike2Price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹ 0"
+                        android:textSize="10sp"
+                        android:textColor="#EA580C"
+                        android:textStyle="bold"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Bike 3 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:layout_marginStart="4dp"
+                    app:cardCornerRadius="8dp">
+
+                    <ImageView
+                        android:id="@+id/ivBike3"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/sample_bike"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/tvBike3Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bike 3"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#111827"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:id="@+id/tvBike3Price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹ 0"
+                        android:textSize="10sp"
+                        android:textColor="#10B981"
+                        android:textStyle="bold"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Main Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp">
+
+            <!-- Engine & Performance Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+
+                <!-- Section Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ENGINE &amp; PERFORMANCE"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#4B5563"
+                    android:letterSpacing="0.05"
+                    android:paddingStart="4dp"
+                    android:drawableStart="@drawable/border_primary_left"
+                    android:drawablePadding="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Comparison Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:paddingVertical="8dp"
+                    app:cardCornerRadius="12dp"
+                    android:elevation="2dp">
+
+                    <!-- Displacement -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Displacement"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvDisplacement1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="155 cc"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvDisplacement2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="124.7 cc"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvDisplacement3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="199.5 cc"
+                                android:textSize="12sp"
+                                android:textColor="#10B981"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Max Power -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Max Power"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvMaxPower1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="18.4 PS"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvMaxPower2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="14.5 PS"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvMaxPower3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="24.5 PS"
+                                android:textSize="12sp"
+                                android:textColor="#10B981"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Peak Torque -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12px">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Peak Torque"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvPeakTorque1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="14.1 Nm"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvPeakTorque2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="12 Nm"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvPeakTorque3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="18.7 Nm"
+                                android:textSize="12sp"
+                                android:textColor="#10B981"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Mileage -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mileage (ARAI)"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvMileage1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvMileage2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvMileage3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Top Speed -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:background="#F9FAFB">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Top Speed"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvTopSpeed1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvTopSpeed2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvTopSpeed3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Features & Safety Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FEATURES &amp; SAFETY"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#4B5563"
+                    android:letterSpacing="0.05"
+                    android:paddingStart="4dp"
+                    android:drawableStart="@drawable/border_primary_left"
+                    android:drawablePadding="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:paddingVertical="8dp"
+                    app:cardCornerRadius="12dp"
+                    android:elevation="2dp">
+
+                    <!-- Braking System -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Braking System"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvBraking1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Single Channel ABS"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:maxLines="2"
+                                android:ellipsize="end" />
+
+                            <TextView
+                                android:id="@+id/tvBraking2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Single Channel ABS"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:maxLines="2"
+                                android:ellipsize="end" />
+
+                            <TextView
+                                android:id="@+id/tvBraking3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Dual Channel ABS"
+                                android:textSize="10sp"
+                                android:textColor="#10B981"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:maxLines="2"
+                                android:ellipsize="end" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Headlight Type -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Headlight Type"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvHeadlight1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="LED Projector"
+                                android:textSize="10sp"
+                                android:textColor="#10B981"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:maxLines="2"
+                                android:ellipsize="end" />
+
+                            <TextView
+                                android:id="@+id/tvHeadlight2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Halogen"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvHeadlight3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Halogen"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Instrument Console -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Instrument Console"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvConsole1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvConsole2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvConsole3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Transmission -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:background="#F9FAFB">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Transmission"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvTransmission1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvTransmission2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvTransmission3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Dimensions Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DIMENSIONS"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#4B5563"
+                    android:letterSpacing="0.05"
+                    android:paddingStart="4dp"
+                    android:drawableStart="@drawable/border_primary_left"
+                    android:drawablePadding="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:paddingVertical="8dp"
+                    app:cardCornerRadius="12dp"
+                    android:elevation="2dp">
+
+                    <!-- Kerb Weight -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kerb Weight"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvKerbWeight1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="139 kg"
+                                android:textSize="12sp"
+                                android:textColor="#10B981"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvKerbWeight2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="159 kg"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvKerbWeight3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="158 kg"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Fuel Tank -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Fuel Tank Capacity"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvFuelTank1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="10 L"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvFuelTank2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="13.5 L"
+                                android:textSize="12sp"
+                                android:textColor="#10B981"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvFuelTank3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="12 L"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Seat Height -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Seat Height"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvSeatHeight1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvSeatHeight2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvSeatHeight3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Tyre Type -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tyre Type"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvTyreType1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvTyreType2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvTyreType3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Brakes & Suspension Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BRAKES &amp; SUSPENSION"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#4B5563"
+                    android:letterSpacing="0.05"
+                    android:paddingStart="4dp"
+                    android:drawableStart="@drawable/border_primary_left"
+                    android:drawablePadding="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:paddingVertical="8dp"
+                    app:cardCornerRadius="12dp"
+                    android:elevation="2dp">
+
+                    <!-- Front Brake -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Front Brake"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvFrontBrake1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvFrontBrake2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvFrontBrake3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Rear Brake -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Rear Brake"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvRearBrake1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvRearBrake2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvRearBrake3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Front Suspension -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Front Suspension"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvFrontSuspension1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvFrontSuspension2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvFrontSuspension3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F3F4F6" />
+
+                    <!-- Rear Suspension -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Rear Suspension"
+                            android:textSize="10sp"
+                            android:textColor="#4B5563"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvRearSuspension1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvRearSuspension2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tvRearSuspension3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="10sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Price Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PRICE (EX-SHOWROOM)"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#4B5563"
+                    android:letterSpacing="0.05"
+                    android:paddingStart="4dp"
+                    android:drawableStart="@drawable/border_primary_left"
+                    android:drawablePadding="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:padding="16dp"
+                    app:cardCornerRadius="12dp"
+                    android:elevation="2dp">
+
+                    <!-- Bike 1 Price -->
+                    <LinearLayout
+                        android:id="@+id/layoutPrice1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:id="@+id/tvPriceName1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#4B5563" />
+
+                            <TextView
+                                android:id="@+id/tvPriceValue1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ -"
+                                android:textSize="14sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Bike 2 Price -->
+                    <LinearLayout
+                        android:id="@+id/layoutPrice2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:id="@+id/tvPriceName2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#4B5563" />
+
+                            <TextView
+                                android:id="@+id/tvPriceValue2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ -"
+                                android:textSize="14sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Bike 3 Price -->
+                    <LinearLayout
+                        android:id="@+id/layoutPrice3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:id="@+id/tvPriceName3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="-"
+                                android:textSize="12sp"
+                                android:textColor="#4B5563" />
+
+                            <TextView
+                                android:id="@+id/tvPriceValue3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ -"
+                                android:textSize="14sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

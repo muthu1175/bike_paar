@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- HOME -->
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="home" />
+
+    <!-- SEARCH -->
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/ic_search_small"
+        android:title="search" />
+
+    <!-- AI -->
+    <item
+        android:id="@+id/nav_ai"
+        android:title="AI" />
+
+    <!-- FAVOURITE -->
+    <item
+        android:id="@+id/nav_fav"
+        android:icon="@drawable/ic_fav"
+        android:title="favourite" />
+
+    <!-- PROFILE -->
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="profile" />
+
+</menu>

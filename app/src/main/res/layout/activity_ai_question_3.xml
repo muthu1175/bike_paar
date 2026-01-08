@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:fitsSystemWindows="true">
+
+    <!-- TOP BAR -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/ivMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_menu" />
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bikepaar_logo" />
+
+        <ImageView
+            android:id="@+id/ivBell"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_notifications" />
+    </RelativeLayout>
+
+    <!-- BLUE CARD -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="66dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@drawable/ai_card_bg">
+
+        <!-- HEADER -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvAiLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI Suggestion"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar_card"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_below="@id/tvAiLabel"
+                android:layout_marginTop="8dp"
+                android:max="9"
+                android:progress="3"
+                android:progressTint="#27AE60"
+                android:backgroundTint="#2B3A6A" />
+
+            <TextView
+                android:id="@+id/tvStep_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3/9"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBaseline="@id/tvAiLabel"
+                android:layout_marginEnd="36dp" />
+
+            <ImageView
+                android:id="@+id/btnClose_card"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="#FFFFFF" />
+        </RelativeLayout>
+
+        <!-- ICON -->
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_family_big" />
+
+        <!-- QUESTION -->
+        <TextView
+            android:id="@+id/tvQuestionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Who will ride with you?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/tvQuestionSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Solo Ride or Family Ride?"
+            android:textSize="12sp"
+            android:textColor="#BFE0FF"
+            android:layout_marginTop="6dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <!-- 🔥 BUDGET PREVIEW (NEW – REQUIRED) -->
+        <TextView
+            android:id="@+id/tvPreviewBudget_q3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Budget: ₹ 0"
+            android:textSize="12sp"
+            android:textColor="#BFE0FF"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <!-- OPTIONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="18dp">
+
+            <!-- SOLO -->
+            <RelativeLayout
+                android:id="@+id/optSolo_q3"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/option_bg">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/ic_person" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Solo Ride"
+                    android:textStyle="bold"
+                    android:layout_marginStart="56dp" />
+
+                <ImageView
+                    android:id="@+id/ivSoloTick_q3"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_radio_selected" />
+            </RelativeLayout>
+
+            <!-- FAMILY -->
+            <RelativeLayout
+                android:id="@+id/optFamily_q3"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:padding="12dp"
+                android:background="@drawable/option_bg">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/ic_family" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Family"
+                    android:textStyle="bold"
+                    android:layout_marginStart="56dp" />
+
+                <ImageView
+                    android:id="@+id/ivFamilyTick_q3"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_radio_unselected"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!-- BUTTONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btnBack_q3"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Back"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/ai_prev_button_bg"/>
+
+            <TextView
+                android:id="@+id/btnNext_q3"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Next →"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/ai_next_button_bg"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

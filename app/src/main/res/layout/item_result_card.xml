@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    card:cardCornerRadius="10dp"
+    card:cardElevation="4dp"
+    android:padding="12dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivBike"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:scaleType="fitCenter"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/sample_bike" />
+
+        <TextView
+            android:id="@+id/tvBikeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/ivBike"
+            android:layout_marginStart="12dp"
+            android:text="Bike Title"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvBikeSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvBikeTitle"
+            android:layout_toEndOf="@id/ivBike"
+            android:layout_marginStart="12dp"
+            android:text="Avg Ex-showroom price" />
+
+        <TextView
+            android:id="@+id/tvBikePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="₹ 86,423"
+            android:textStyle="bold"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/tvAiPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/tvBikePrice"
+            android:layout_marginEnd="12dp"
+            android:text="AI 99%"
+            android:background="@drawable/ai_percent_bg"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnViewDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/tvAiPercent"
+            android:text="view details"
+            android:background="@drawable/rounded_green_button"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

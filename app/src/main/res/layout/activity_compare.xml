@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F4F6"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="12dp"
+            android:background="#F3F4F6">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:scaleType="center"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="#111827" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Compare Bikes"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#111827"
+                android:gravity="center" />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+        </LinearLayout>
+
+        <!-- Main content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <!-- Description -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select up to 3 bikes to compare specs, features, and prices."
+                android:textSize="14sp"
+                android:textColor="#4B5563"
+                android:lineSpacingExtra="2dp"
+                android:layout_marginBottom="16dp"
+                android:paddingHorizontal="4dp" />
+
+            <!-- Add Bike Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
+
+                <!-- Add Bike 1 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/addBike1"
+                    android:layout_width="0dp"
+                    android:layout_height="128dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    android:layout_marginEnd="6dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <!-- EMPTY STATE -->
+                        <LinearLayout
+                            android:id="@+id/layoutAddBike1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/border_dashed">
+
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="#F3F4F6"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="8dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="+"
+                                    android:textSize="24sp"
+                                    android:textColor="#9CA3AF" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add Bike"
+                                android:textSize="12sp"
+                                android:textColor="#4B5563"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- FILLED STATE -->
+                        <LinearLayout
+                            android:id="@+id/layoutSelectedBike1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="#FFFFFF"
+                            android:visibility="gone"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/ivSelectedBike1"
+                                android:layout_width="80dp"
+                                android:layout_height="60dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/sample_bike"
+                                android:layout_marginBottom="8dp"/>
+
+                            <TextView
+                                android:id="@+id/tvSelectedBike1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bike Name"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:gravity="center"/>
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnRemoveBike1"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/circle_bg"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            android:padding="6dp"
+                            android:tint="#111827"
+                            android:visibility="gone"/>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Add Bike 2 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/addBike2"
+                    android:layout_width="0dp"
+                    android:layout_height="128dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    android:layout_marginHorizontal="6dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <!-- EMPTY STATE -->
+                        <LinearLayout
+                            android:id="@+id/layoutAddBike2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/border_dashed">
+
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="#F3F4F6"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="8dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="+"
+                                    android:textSize="24sp"
+                                    android:textColor="#9CA3AF" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add Bike"
+                                android:textSize="12sp"
+                                android:textColor="#4B5563"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- FILLED STATE -->
+                        <LinearLayout
+                            android:id="@+id/layoutSelectedBike2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="#FFFFFF"
+                            android:visibility="gone"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/ivSelectedBike2"
+                                android:layout_width="80dp"
+                                android:layout_height="60dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/sample_bike"
+                                android:layout_marginBottom="8dp"/>
+
+                            <TextView
+                                android:id="@+id/tvSelectedBike2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bike Name"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:gravity="center"/>
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnRemoveBike2"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/circle_bg"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            android:padding="6dp"
+                            android:tint="#111827"
+                            android:visibility="gone"/>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Add Bike 3 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/addBike3"
+                    android:layout_width="0dp"
+                    android:layout_height="128dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    android:layout_marginStart="6dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <!-- EMPTY STATE -->
+                        <LinearLayout
+                            android:id="@+id/layoutAddBike3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/border_dashed">
+
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="#F3F4F6"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="8dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="+"
+                                    android:textSize="24sp"
+                                    android:textColor="#9CA3AF" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add Bike"
+                                android:textSize="12sp"
+                                android:textColor="#4B5563"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- FILLED STATE -->
+                        <LinearLayout
+                            android:id="@+id/layoutSelectedBike3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="#FFFFFF"
+                            android:visibility="gone"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/ivSelectedBike3"
+                                android:layout_width="80dp"
+                                android:layout_height="60dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/sample_bike"
+                                android:layout_marginBottom="8dp"/>
+
+                            <TextView
+                                android:id="@+id/tvSelectedBike3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bike Name"
+                                android:textSize="12sp"
+                                android:textColor="#111827"
+                                android:textStyle="bold"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                android:gravity="center"/>
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnRemoveBike3"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/circle_bg"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            android:padding="6dp"
+                            android:tint="#111827"
+                            android:visibility="gone"/>
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- Disabled Compare Now Button -->
+            <Button
+                android:id="@+id/btnDisabledCompare"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Compare Now"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#9CA3AF"
+                android:background="#E5E7EB"
+                android:layout_marginBottom="32dp"
+                android:enabled="true" />
+
+<!--            &lt;!&ndash; Popular Compares Title &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Popular Compares"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="#111827"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:paddingHorizontal="4dp" />-->
+
+<!--            &lt;!&ndash; Compare Card 1 &ndash;&gt;-->
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/compareCard1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:cardCornerRadius="12dp"-->
+<!--                app:cardElevation="2dp"-->
+<!--                app:cardBackgroundColor="#FFFFFF"-->
+<!--                android:layout_marginBottom="12dp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="16dp">-->
+
+<!--                    &lt;!&ndash; Bike comparison row &ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:layout_marginBottom="16dp">-->
+
+<!--                        &lt;!&ndash; Bike 1 &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="64dp"-->
+<!--                                android:layout_height="48dp"-->
+<!--                                android:background="#F3F4F6"-->
+<!--                                android:gravity="center"-->
+<!--                                android:layout_marginBottom="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="🏍️"-->
+<!--                                    android:textSize="20sp" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Yamaha MT-15"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#111827"-->
+<!--                                android:maxLines="1"-->
+<!--                                android:ellipsize="end" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="₹ 1.68 Lakh"-->
+<!--                                android:textSize="10sp"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:layout_marginTop="2dp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        &lt;!&ndash; VS badge &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center"-->
+<!--                            android:paddingHorizontal="4dp">-->
+
+<!--                            <View-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="1dp"-->
+<!--                                android:background="#E5E7EB"-->
+<!--                                android:layout_marginBottom="12dp" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="24dp"-->
+<!--                                android:layout_height="24dp"-->
+<!--                                android:text="VS"-->
+<!--                                android:textSize="8sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:gravity="center"-->
+<!--                                android:background="#FFFFFF"-->
+<!--                                android:elevation="2dp" />-->
+
+<!--                            <View-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="1dp"-->
+<!--                                android:background="#E5E7EB"-->
+<!--                                android:layout_marginTop="12dp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        &lt;!&ndash; Bike 2 &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="64dp"-->
+<!--                                android:layout_height="48dp"-->
+<!--                                android:background="#F3F4F6"-->
+<!--                                android:gravity="center"-->
+<!--                                android:layout_marginBottom="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="🏍️"-->
+<!--                                    android:textSize="20sp" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="KTM Duke 125"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#111827"-->
+<!--                                android:maxLines="1"-->
+<!--                                android:ellipsize="end" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="₹ 1.78 Lakh"-->
+<!--                                android:textSize="10sp"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:layout_marginTop="2dp" />-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/btnCompareNow1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:text="COMPARE NOW"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="#EA580C"-->
+<!--                        android:background="@drawable/border_outline_primary"-->
+<!--                        android:letterSpacing="0.05"-->
+<!--                        android:textAllCaps="true" />-->
+<!--                </LinearLayout>-->
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            &lt;!&ndash; Compare Card 2 &ndash;&gt;-->
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/compareCard2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:cardCornerRadius="12dp"-->
+<!--                app:cardElevation="2dp"-->
+<!--                app:cardBackgroundColor="#FFFFFF"-->
+<!--                android:layout_marginBottom="12dp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="16dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:layout_marginBottom="16dp">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="64dp"-->
+<!--                                android:layout_height="48dp"-->
+<!--                                android:background="#F3F4F6"-->
+<!--                                android:gravity="center"-->
+<!--                                android:layout_marginBottom="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="🏍️"-->
+<!--                                    android:textSize="20sp" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Royal Enfield 350"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#111827"-->
+<!--                                android:maxLines="1"-->
+<!--                                android:ellipsize="end" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="₹ 1.93 Lakh"-->
+<!--                                android:textSize="10sp"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:layout_marginTop="2dp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center"-->
+<!--                            android:paddingHorizontal="4dp">-->
+
+<!--                            <View-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="1dp"-->
+<!--                                android:background="#E5E7EB"-->
+<!--                                android:layout_marginBottom="12dp" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="24dp"-->
+<!--                                android:layout_height="24dp"-->
+<!--                                android:text="VS"-->
+<!--                                android:textSize="8sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:gravity="center"-->
+<!--                                android:background="#FFFFFF"-->
+<!--                                android:elevation="2dp" />-->
+
+<!--                            <View-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="1dp"-->
+<!--                                android:background="#E5E7EB"-->
+<!--                                android:layout_marginTop="12dp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="64dp"-->
+<!--                                android:layout_height="48dp"-->
+<!--                                android:background="#F3F4F6"-->
+<!--                                android:gravity="center"-->
+<!--                                android:layout_marginBottom="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="🏍️"-->
+<!--                                    android:textSize="20sp" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Honda CB350"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#111827"-->
+<!--                                android:maxLines="1"-->
+<!--                                android:ellipsize="end" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="₹ 1.99 Lakh"-->
+<!--                                android:textSize="10sp"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:layout_marginTop="2dp" />-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/btnCompareNow2"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:text="COMPARE NOW"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="#EA580C"-->
+<!--                        android:background="@drawable/border_outline_primary"-->
+<!--                        android:letterSpacing="0.05"-->
+<!--                        android:textAllCaps="true" />-->
+<!--                </LinearLayout>-->
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            &lt;!&ndash; Compare Card 3 &ndash;&gt;-->
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/compareCard3"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:cardCornerRadius="12dp"-->
+<!--                app:cardElevation="2dp"-->
+<!--                app:cardBackgroundColor="#FFFFFF"-->
+<!--                android:layout_marginBottom="12dp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="16dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:layout_marginBottom="16dp">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="64dp"-->
+<!--                                android:layout_height="48dp"-->
+<!--                                android:background="#F3F4F6"-->
+<!--                                android:gravity="center"-->
+<!--                                android:layout_marginBottom="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="🏍️"-->
+<!--                                    android:textSize="20sp" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Bajaj Pulsar N250"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#111827"-->
+<!--                                android:maxLines="1"-->
+<!--                                android:ellipsize="end" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="₹ 1.44 Lakh"-->
+<!--                                android:textSize="10sp"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:layout_marginTop="2dp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center"-->
+<!--                            android:paddingHorizontal="4dp">-->
+
+<!--                            <View-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="1dp"-->
+<!--                                android:background="#E5E7EB"-->
+<!--                                android:layout_marginBottom="12dp" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="24dp"-->
+<!--                                android:layout_height="24dp"-->
+<!--                                android:text="VS"-->
+<!--                                android:textSize="8sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:gravity="center"-->
+<!--                                android:background="#FFFFFF"-->
+<!--                                android:elevation="2dp" />-->
+
+<!--                            <View-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="1dp"-->
+<!--                                android:background="#E5E7EB"-->
+<!--                                android:layout_marginTop="12dp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:gravity="center">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="64dp"-->
+<!--                                android:layout_height="48dp"-->
+<!--                                android:background="#F3F4F6"-->
+<!--                                android:gravity="center"-->
+<!--                                android:layout_marginBottom="8dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="🏍️"-->
+<!--                                    android:textSize="20sp" />-->
+<!--                            </LinearLayout>-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Suzuki Gixxer 250"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="#111827"-->
+<!--                                android:maxLines="1"-->
+<!--                                android:ellipsize="end" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="₹ 1.81 Lakh"-->
+<!--                                android:textSize="10sp"-->
+<!--                                android:textColor="#4B5563"-->
+<!--                                android:layout_marginTop="2dp" />-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
+<!--                    <Button-->
+<!--                        android:id="@+id/btnCompareNow3"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:text="COMPARE NOW"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="#EA580C"-->
+<!--                        android:background="@drawable/border_outline_primary"-->
+<!--                        android:letterSpacing="0.05"-->
+<!--                        android:textAllCaps="true" />-->
+<!--                </LinearLayout>-->
+<!--            </androidx.cardview.widget.CardView>-->
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
