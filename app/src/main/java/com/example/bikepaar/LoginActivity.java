@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView btnToggleLogin, btnToggleSignup, tvForgot;
     View selector;
 
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         btnToggleSignup = findViewById(R.id.btnToggleSignup);
         tvForgot = findViewById(R.id.tvForgot);
         selector = findViewById(R.id.selector);
+        progressBar = findViewById(R.id.progressBar);
 
         selectLogin();
 
@@ -52,6 +56,11 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
+            // SHOW LOADING
+            btnSignIn.setEnabled(false);
+            btnSignIn.setText("");
+            progressBar.setVisibility(View.VISIBLE);
+
             Map<String, String> body = new HashMap<>();
             body.put("email", email);
             body.put("password", pass);
@@ -60,6 +69,11 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Map<String, String>> call,
                                        Response<Map<String, String>> response) {
+                    
+                    // HIDE LOADING
+                    btnSignIn.setEnabled(true);
+                    btnSignIn.setText("sign in");
+                    progressBar.setVisibility(View.GONE);
 
                     if (response.isSuccessful() && response.body() != null) {
 
@@ -94,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                    // HIDE LOADING
+                    btnSignIn.setEnabled(true);
+                    btnSignIn.setText("sign in");
+                    progressBar.setVisibility(View.GONE);
+
                     Toast.makeText(LoginActivity.this,
                             t.getMessage(), Toast.LENGTH_LONG).show();
                 }
