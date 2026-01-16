@@ -123,7 +123,7 @@ public class BrandActivity extends AppCompatActivity implements BrandAdapter.OnB
     }
 
     @Override
-    public void onBrandClick(int position) {
+    public void onBrandClick(int position, android.widget.ImageView sharedImageView) {
         BrandItem brand = brandList.get(position);
 
         // Get the brand logo resource ID
@@ -132,8 +132,15 @@ public class BrandActivity extends AppCompatActivity implements BrandAdapter.OnB
         Intent intent = new Intent(BrandActivity.this, BrandDetailsActivity.class);
         intent.putExtra("BRAND_NAME", brand.getName());
         intent.putExtra("BRAND_LOGO", logoResId);
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        
+        // Shared Element Transition
+        android.app.ActivityOptions options = android.app.ActivityOptions.makeSceneTransitionAnimation(
+                BrandActivity.this,
+                sharedImageView,
+                "shared_brand_logo"
+        );
+
+        startActivity(intent, options.toBundle());
     }
 
     private int getBrandLogoResource(String brandName) {

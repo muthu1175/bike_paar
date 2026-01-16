@@ -15,7 +15,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
     private OnBrandClickListener listener;
 
     public interface OnBrandClickListener {
-        void onBrandClick(int position);
+        void onBrandClick(int position, ImageView sharedImageView);
     }
 
     public BrandAdapter(List<BrandItem> brandList, OnBrandClickListener listener) {
@@ -39,7 +39,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onBrandClick(position);
+                listener.onBrandClick(position, holder.brandImage);
             }
         });
     }
