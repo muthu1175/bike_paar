@@ -5,19 +5,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
 public class FullSpecificationsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_specifications);
-        // Disable transition to fix 'Mismatch' error
-        overridePendingTransition(0, 0);
+        // Default transitions allowed for Shared Element
+        // overridePendingTransition(0, 0); // Removed for animation
 
         // Get data from intent
         String bikeName = getIntent().getStringExtra("BIKE_NAME");
         String bikePrice = getIntent().getStringExtra("PRICE");
+        // Try getting both keys just in case
+        int priceInt = getIntent().getIntExtra("BIKE_PRICE", 0);
+        if (bikePrice == null && priceInt > 0) {
+             bikePrice = String.format("₹%,d", priceInt);
+        }
+
         String bikeEngine = getIntent().getStringExtra("BIKE_ENGINE");
+        String bikeImageUrl = getIntent().getStringExtra("BIKE_IMAGE_URL");
 
         // Back Button
         ImageView btnBack = findViewById(R.id.btn_back);
@@ -32,6 +41,15 @@ public class FullSpecificationsActivity extends AppCompatActivity {
         if (bikePrice != null) {
             TextView tvBikePrice = findViewById(R.id.bike_price);
             tvBikePrice.setText(bikePrice);
+        }
+        
+        // Load Image
+        ImageView ivBike = findViewById(R.id.bike_image);
+        if (bikeImageUrl != null && !bikeImageUrl.isEmpty()) {
+            Glide.with(this)
+                 .load(bikeImageUrl)
+                 .placeholder(R.drawable.sample_bike)
+                 .into(ivBike);
         }
 
         if (bikeEngine != null) {

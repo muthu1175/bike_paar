@@ -118,9 +118,11 @@
                     android:id="@+id/tvTagline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="brining AI to choose the comfort bike"
+                    android:text="bringing AI to choose the comfort bike"
                     android:textColor="#FFFFFF"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:fontFamily="cursive"
+                    android:textStyle="bold"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_marginBottom="10dp" />
             </FrameLayout>

@@ -181,6 +181,58 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
+        
+        // 🔹 NEW: Welcome Animation (Wave Float + Color Change)
+        android.widget.TextView tvWelcome = findViewById(R.id.tvWelcome);
+        if (tvWelcome != null) {
+            // 1. Float Animation (Wave-like)
+            android.animation.ObjectAnimator floatAnim = android.animation.ObjectAnimator.ofFloat(
+                    tvWelcome, "translationY", 0f, 15f);
+            floatAnim.setDuration(1200);
+            floatAnim.setRepeatCount(android.animation.ValueAnimator.INFINITE);
+            floatAnim.setRepeatMode(android.animation.ValueAnimator.REVERSE);
+            floatAnim.setInterpolator(new android.view.animation.AccelerateDecelerateInterpolator());
+            floatAnim.start();
+
+            // 2. Color Animation
+            android.animation.ObjectAnimator colorAnim = android.animation.ObjectAnimator.ofInt(
+                    tvWelcome, "textColor", 
+                    android.graphics.Color.parseColor("#FFC65C"), // Gold
+                    android.graphics.Color.parseColor("#FF5722")  // Orange
+            );
+            colorAnim.setEvaluator(new android.animation.ArgbEvaluator());
+            colorAnim.setDuration(1200);
+            colorAnim.setRepeatCount(android.animation.ValueAnimator.INFINITE);
+            colorAnim.setRepeatMode(android.animation.ValueAnimator.REVERSE);
+            colorAnim.start();
+        }
+        
+        // 🔹 3. Tagline Typewriter Animation
+        final android.widget.TextView tvTagline = findViewById(R.id.tvTagline);
+        if (tvTagline != null) {
+            final String fullText = "bringing AI to choose the comfort bike";
+            tvTagline.setText(""); // Start empty
+            
+            final Handler handler = new Handler(Looper.getMainLooper());
+            Runnable typeWriter = new Runnable() {
+                int index = 0;
+                @Override
+                public void run() {
+                    if (index <= fullText.length()) {
+                        tvTagline.setText(fullText.substring(0, index));
+                        index++;
+                        handler.postDelayed(this, 100); // 100ms delay per letter
+                    } else {
+                        // Optional: Reset and loop? Or just stop.
+                        // User said "wave mari poganum", implying continuous movement or just the effect.
+                        // Let's loop it with a pause.
+                        index = 0;
+                        handler.postDelayed(this, 3000); // Wait 3s then restart
+                    }
+                }
+            };
+            handler.post(typeWriter);
+        }
     }
 
     private void updateDots(int position) {

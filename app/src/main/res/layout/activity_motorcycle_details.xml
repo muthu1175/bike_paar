@@ -81,6 +81,7 @@
             android:layout_height="250dp"
             android:src="@drawable/sample_bike"
             android:scaleType="fitCenter"
+            android:transitionName="shared_bike_image"
             android:layout_marginBottom="16dp" />
 
         <!-- Title & Price -->

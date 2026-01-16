@@ -105,6 +105,7 @@ public class MotorcycleDetailsActivity extends AppCompatActivity {
             specsIntent.putExtra("BIKE_ENGINE", finalBikeEngine);
             
             if (intent != null) {
+                specsIntent.putExtra("BIKE_IMAGE_URL", intent.getStringExtra("BIKE_IMAGE_URL"));
                 specsIntent.putExtra("MAX_POWER", intent.getStringExtra("MAX_POWER"));
                 specsIntent.putExtra("MAX_TORQUE", intent.getStringExtra("MAX_TORQUE"));
                 specsIntent.putExtra("KERB_WEIGHT", intent.getStringExtra("KERB_WEIGHT"));
@@ -123,8 +124,14 @@ public class MotorcycleDetailsActivity extends AppCompatActivity {
                 specsIntent.putExtra("BATTERY_CAPACITY", intent.getStringExtra("BATTERY_CAPACITY"));
             }
             
-            startActivity(specsIntent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            // Shared Element Transition
+            android.app.ActivityOptions options = android.app.ActivityOptions.makeSceneTransitionAnimation(
+                    MotorcycleDetailsActivity.this,
+                    ivBike,
+                    "shared_bike_image"
+            );
+            
+            startActivity(specsIntent, options.toBundle());
         });
     }
 }
