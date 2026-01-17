@@ -131,8 +131,8 @@ public class HomeActivity extends AppCompatActivity {
         });
         aiButton = findViewById(R.id.aiButton);
         aiButton.setOnClickListener(v -> {
-            Intent i = new Intent(HomeActivity.this, AiQuestionActivity.class);
-            i.putExtra("step", 1);  // 1/9 question
+            Intent i = new Intent(HomeActivity.this, AiSplashActivity.class);
+            // i.putExtra("step", 1); // Not needed for splash
             startActivity(i);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });

@@ -59,6 +59,7 @@
         <activity android:name=".AiQuestion9Activity" />
         <!-- Also register result screen if you create it -->
         <activity android:name=".AiResultActivity" />
+        <activity android:name=".AiSplashActivity" android:exported="false" />
 
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".RecentLaunchesActivity" />
