@@ -208,7 +208,7 @@ public class CompareResultsActivity extends AppCompatActivity {
 
                 setText(tvKerbWeights[i], b.getKerbWeight());
                 setText(tvFuelTanks[i], b.getFuelTankCapacity());
-                setText(tvSeatHeights[i], "-");
+                setText(tvSeatHeights[i], b.getSeatHeight());
                 setText(tvTyreTypes[i], b.getTyreType());
 
                 setText(tvFrontBrakes[i], b.getFrontBrakeType());

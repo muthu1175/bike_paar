@@ -252,9 +252,190 @@ public class HomeActivity extends AppCompatActivity {
         
         PopularBrandsHomeAdapter brandAdapter = new PopularBrandsHomeAdapter(this, popularBrands);
         rvPopularBrands.setAdapter(brandAdapter);
+        
+        // 🔹 5. LOAD SLIDER IMAGES (Super Bikes)
+        fetchSliderImages(adapter);
+    }
+    
+    private void fetchSliderImages(BikeSliderAdapter adapter) {
+        // Fetch ALL bikes to ensure we find the specific ones requested
+        android.content.SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+        String rawToken = prefs.getString("TOKEN", "");
+        String token = rawToken.isEmpty() ? null : "Token " + rawToken;
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getAllBikes(token).enqueue(new retrofit2.Callback<java.util.List<SportsBike>>() {
+            @Override
+            public void onResponse(retrofit2.Call<java.util.List<SportsBike>> call, retrofit2.Response<java.util.List<SportsBike>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    java.util.List<SportsBike> allBikes = response.body();
+                    java.util.List<Bike> sliderList = new java.util.ArrayList<>();
+                    
+                    Bike nx500 = null;
+                    Bike cbr400r = null;
+                    Bike gt650 = null;
+                    java.util.List<Bike> others = new java.util.ArrayList<>();
+
+                    // Find specific bikes and convert SportsBike -> Bike
+                    for (SportsBike sb : allBikes) {
+                        // Convert to Bike object
+                        Bike b = new Bike(
+                            sb.name, 
+                            sb.name, 
+                            sb.engine != null ? sb.engine : "", 
+                            sb.mileage != null ? sb.mileage : "", 
+                            sb.getPrice(), 
+                            sb.imageUrl, 
+                            "", // badge
+                            "Motorcycle", 
+                            "Sports"
+                        );
+                        // Access private fields via public setters or direct assignment if public?
+                        // Bike fields are public.
+                        b.maxPower = sb.maxPower;
+                        b.maxTorque = sb.maxTorque;
+                        b.kerbWeight = sb.kerbWeight;
+                        b.topSpeed = sb.topSpeed;
+
+                        String name = b.name.toLowerCase();
+                        if (name.contains("nx500")) {
+                            nx500 = b;
+                        } else if (name.contains("cbr 400r") || name.contains("cbr 400 r")) {
+                            cbr400r = b;
+                        } else if (name.contains("continental gt 650") || name.contains("gt 650")) {
+                            gt650 = b;
+                        } else {
+                            // Only add premium bikes to "Others" fallback (e.g. > 2 Lakh)
+                            if (b.price > 200000) {
+                                others.add(b);
+                            }
+                        }
+                    }
+
+                    // Constuct List: [NX500, CBR 400R, GT650, Others...]
+                    
+                    // 1. First: NX500
+                    if (nx500 != null) sliderList.add(nx500);
+                    else if (!others.isEmpty()) sliderList.add(others.remove(0)); // Fallback
+
+                    // 2. Second: CBR 400R
+                    if (cbr400r != null) sliderList.add(cbr400r);
+                    else if (!others.isEmpty()) sliderList.add(others.remove(0));
+
+                    // 3. Third: Continental GT 650
+                    if (gt650 != null) sliderList.add(gt650);
+                    else if (!others.isEmpty()) sliderList.add(others.remove(0));
+
+                    // 4. Fill remaining up to 5 total from premium others
+                    while (sliderList.size() < 5 && !others.isEmpty()) {
+                        sliderList.add(others.remove(0));
+                    }
+                    
+                    if (!sliderList.isEmpty()) {
+                        adapter.setBikes(sliderList);
+                        // Reset slider timer
+                        viewPagerBikes.setCurrentItem(0, false);
+                    }
+
+                    // 🔹 POPULAR COMPARE POPULATION (Reuse allBikes)
+                    populatePopularCompare(allBikes);
+                }
+            }
+            @Override
+            public void onFailure(retrofit2.Call<java.util.List<SportsBike>> call, Throwable t) {
+                // Ignore failure
+            }
+        });
+    }
+
+    private void populatePopularCompare(java.util.List<SportsBike> allBikes) {
+        androidx.recyclerview.widget.RecyclerView rvPopularCompare = findViewById(R.id.rvPopularCompare);
+         // If layout manager not set, set it. Or set in onCreate. Let's assume we set here or onCreate.
+         // Better to set in onCreate, but let's do it safely here if we can't edit onCreate easily right now.
+        if (rvPopularCompare.getLayoutManager() == null) {
+             rvPopularCompare.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(
+                this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false));
+        }
+
+        java.util.List<CompareItem> compareList = new java.util.ArrayList<>();
+        
+        // 1. Himalayan 450 vs Xpulse 200 4V
+        Bike himalayan = findBike(allBikes, "himalayan 450");
+        Bike xpulse = findBike(allBikes, "xpulse 200 4v");
+        if (himalayan != null && xpulse != null) {
+            compareList.add(new CompareItem(himalayan, xpulse));
+        }
+
+        // 2. MT-15 vs R15 V4
+        Bike mt15 = findBike(allBikes, "mt-15");
+        Bike r15 = findBike(allBikes, "r15 v4");
+        if (mt15 != null && r15 != null) {
+             compareList.add(new CompareItem(mt15, r15));
+        }
+
+        // 3. NS 200 vs RS 200
+        Bike ns200 = findBike(allBikes, "ns200"); // or ns 200
+        Bike rs200 = findBike(allBikes, "rs200");
+        if (ns200 != null && rs200 != null) {
+             compareList.add(new CompareItem(ns200, rs200));
+        }
+
+        PopularCompareAdapter compareAdapter = new PopularCompareAdapter(this, compareList);
+        rvPopularCompare.setAdapter(compareAdapter);
+    }
+
+    private Bike findBike(java.util.List<SportsBike> sourceList, String query) {
+        // Query should be lowercase
+        query = query.toLowerCase();
+        for (SportsBike sb : sourceList) {
+            if (sb.name.toLowerCase().contains(query)) {
+                 Bike b = new Bike(
+                            sb.name, 
+                            sb.name, 
+                            sb.engine != null ? sb.engine : "", 
+                            sb.mileage != null ? sb.mileage : "", 
+                            sb.getPrice(), 
+                            sb.imageUrl, 
+                            "", // badge
+                            "Motorcycle", 
+                            "Sports"
+                        );
+                 // Copy All Specs for CompareResultsActivity
+                 b.maxPower = sb.maxPower;
+                 b.maxTorque = sb.maxTorque;
+                 b.kerbWeight = sb.kerbWeight;
+                 b.topSpeed = sb.topSpeed;
+                 b.mileage = sb.mileage;
+                 b.fuelTankCapacity = sb.fuelTankCapacity;
+                 b.transmission = sb.transmission;
+                 b.brakingSystem = sb.brakingSystem;
+                 b.frontBrakeType = sb.frontBrakeType;
+                 b.rearBrakeType = sb.rearBrakeType;
+                 b.frontSuspension = sb.frontSuspension;
+                 b.rearSuspension = sb.rearSuspension;
+                 b.tyreType = sb.tyreType;
+                 b.headlight = sb.headlight;
+                 b.tailLight = sb.tailLight;
+                 b.batteryCapacity = sb.batteryCapacity;
+                 
+                 // Dimensions
+                 b.overallLength = sb.overallLength;
+                 b.overallWidth = sb.overallWidth;
+                 b.seatHeight = sb.seatHeight;
+                 b.groundClearance = sb.groundClearance;
+                 
+                 return b;
+            }
+        }
+        return null; // Not found
     }
 
     private void updateDots(int position) {
+        if (dot1 == null || dot2 == null || dot3 == null) return;
+        
+        // Safety check if we have fewer items than dots
+        // Ideally dots should be dynamic too, but for now we keep 3 dots static
+        
         dot1.setBackgroundResource(position == 0 ? R.drawable.dot_active : R.drawable.dot_inactive);
         dot2.setBackgroundResource(position == 1 ? R.drawable.dot_active : R.drawable.dot_inactive);
         dot3.setBackgroundResource(position == 2 ? R.drawable.dot_active : R.drawable.dot_inactive);

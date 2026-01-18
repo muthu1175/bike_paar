@@ -9,17 +9,24 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import java.util.Collections;
+import java.util.List;
+
 public class BikeSliderAdapter extends RecyclerView.Adapter<BikeSliderAdapter.BikeViewHolder> {
 
     private final Context context;
-    private final int[] images = {
-            R.drawable.bike_1,
-            R.drawable.bike_2,
-            R.drawable.bike_3
-    };
+    private List<Bike> sliderBikes;
 
     public BikeSliderAdapter(Context context) {
         this.context = context;
+        this.sliderBikes = Collections.emptyList();
+    }
+    
+    // Function to update data
+    public void setBikes(List<Bike> bikes) {
+        this.sliderBikes = bikes;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -32,12 +39,25 @@ public class BikeSliderAdapter extends RecyclerView.Adapter<BikeSliderAdapter.Bi
 
     @Override
     public void onBindViewHolder(@NonNull BikeViewHolder holder, int position) {
-        holder.imgSlideBike.setImageResource(images[position]);
+        Bike bike = sliderBikes.get(position);
+        
+        // Load image using Glide
+        if (bike.imageUrl != null && !bike.imageUrl.isEmpty()) {
+            Glide.with(context)
+                    .load(bike.imageUrl)
+                    .placeholder(R.drawable.sample_bike) // Use a valid placeholder
+                    .centerCrop()
+                    .into(holder.imgSlideBike);
+        } else if (bike.imageRes != 0) {
+            holder.imgSlideBike.setImageResource(bike.imageRes);
+        } else {
+             holder.imgSlideBike.setImageResource(R.drawable.sample_bike);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return sliderBikes.size();
     }
 
     static class BikeViewHolder extends RecyclerView.ViewHolder {
