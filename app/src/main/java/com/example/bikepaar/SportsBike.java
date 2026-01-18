@@ -71,6 +71,19 @@ public class SportsBike {
     @SerializedName("battery_capacity")
     public String batteryCapacity;
 
+    // Dimensions
+    @SerializedName("overall_length")
+    public String overallLength;
+
+    @SerializedName("overall_width")
+    public String overallWidth;
+
+    @SerializedName("seat_height")
+    public String seatHeight;
+
+    @SerializedName("ground_clearance")
+    public String groundClearance;
+
     // No-arg constructor for Gson
     public SportsBike() {
     }
@@ -143,4 +156,8 @@ public class SportsBike {
     public String getHeadlight() { return headlight != null ? headlight : "LED"; }
     public String getTailLight() { return tailLight != null ? tailLight : "LED"; }
     public String getBatteryCapacity() { return batteryCapacity != null ? batteryCapacity : "N/A"; }
+    public String getOverallLength() { return overallLength != null ? overallLength : "N/A"; }
+    public String getOverallWidth() { return overallWidth != null ? overallWidth : "N/A"; }
+    public String getSeatHeight() { return seatHeight != null ? seatHeight : "N/A"; }
+    public String getGroundClearance() { return groundClearance != null ? groundClearance : "N/A"; }
 }

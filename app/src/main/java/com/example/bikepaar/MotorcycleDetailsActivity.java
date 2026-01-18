@@ -122,6 +122,12 @@ public class MotorcycleDetailsActivity extends AppCompatActivity {
                 specsIntent.putExtra("HEADLIGHT", intent.getStringExtra("HEADLIGHT"));
                 specsIntent.putExtra("TAIL_LIGHT", intent.getStringExtra("TAIL_LIGHT"));
                 specsIntent.putExtra("BATTERY_CAPACITY", intent.getStringExtra("BATTERY_CAPACITY"));
+                
+                // Dimensions
+                specsIntent.putExtra("OVERALL_LENGTH", intent.getStringExtra("OVERALL_LENGTH"));
+                specsIntent.putExtra("OVERALL_WIDTH", intent.getStringExtra("OVERALL_WIDTH"));
+                specsIntent.putExtra("SEAT_HEIGHT", intent.getStringExtra("SEAT_HEIGHT"));
+                specsIntent.putExtra("GROUND_CLEARANCE", intent.getStringExtra("GROUND_CLEARANCE"));
             }
             
             // Shared Element Transition

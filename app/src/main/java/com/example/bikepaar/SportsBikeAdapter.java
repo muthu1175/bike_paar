@@ -139,6 +139,12 @@ public class SportsBikeAdapter extends RecyclerView.Adapter<SportsBikeAdapter.Vi
             intent.putExtra("HEADLIGHT", bike.getHeadlight());
             intent.putExtra("TAIL_LIGHT", bike.getTailLight());
             intent.putExtra("BATTERY_CAPACITY", bike.getBatteryCapacity());
+            
+            // Dimensions
+            intent.putExtra("OVERALL_LENGTH", bike.getOverallLength());
+            intent.putExtra("OVERALL_WIDTH", bike.getOverallWidth());
+            intent.putExtra("SEAT_HEIGHT", bike.getSeatHeight());
+            intent.putExtra("GROUND_CLEARANCE", bike.getGroundClearance());
 
             holder.itemView.getContext().startActivity(intent);
         });

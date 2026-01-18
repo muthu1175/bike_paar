@@ -165,7 +165,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Displacement"
+                            android:text="Displacement (cc)"
                             android:textColor="#666"
                             android:textSize="14sp" />
 
@@ -249,7 +249,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Mileage (ARAI)"
+                            android:text="Mileage kmpl (ARAI)"
                             android:textColor="#666"
                             android:textSize="14sp" />
 
@@ -376,7 +376,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Kerb Weight"
+                            android:text="Kerb Weight (KG)"
                             android:textColor="#666"
                             android:textSize="14sp" />
 
@@ -404,11 +404,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Overall Length"
+                            android:text="Overall Length (mm)"
                             android:textColor="#666"
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_spec_length"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2,020 mm"
@@ -431,11 +432,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Overall Width"
+                            android:text="Overall Width (mm)"
                             android:textColor="#666"
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_spec_width"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="785 mm"
@@ -458,11 +460,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Seat Height"
+                            android:text="Seat Height (mm)"
                             android:textColor="#666"
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_spec_seat_height"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="790 mm"
@@ -485,11 +488,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Ground Clearance"
+                            android:text="Ground Clearance (mm)"
                             android:textColor="#666"
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/tv_spec_ground_clearance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="160 mm"
@@ -512,7 +516,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Fuel Tank Capacity"
+                            android:text="Fuel Tank Capacity (litres)"
                             android:textColor="#666"
                             android:textSize="14sp" />
 

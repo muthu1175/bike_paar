@@ -71,7 +71,14 @@ public class FullSpecificationsActivity extends AppCompatActivity {
         setSpecText(R.id.tv_spec_tyre, "TYRE_TYPE");
         setSpecText(R.id.tv_spec_headlight, "HEADLIGHT");
         setSpecText(R.id.tv_spec_taillight, "TAIL_LIGHT");
+        setSpecText(R.id.tv_spec_taillight, "TAIL_LIGHT");
         setSpecText(R.id.tv_spec_battery, "BATTERY_CAPACITY");
+
+        // Dimensions
+        setSpecText(R.id.tv_spec_length, "OVERALL_LENGTH");
+        setSpecText(R.id.tv_spec_width, "OVERALL_WIDTH");
+        setSpecText(R.id.tv_spec_seat_height, "SEAT_HEIGHT");
+        setSpecText(R.id.tv_spec_ground_clearance, "GROUND_CLEARANCE");
     }
 
     private void setSpecText(int textViewId, String extraKey) {
