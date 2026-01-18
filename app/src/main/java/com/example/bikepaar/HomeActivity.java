@@ -57,9 +57,11 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(i, options);
         });
 
-        ivBell.setOnClickListener(v ->
-                Toast.makeText(HomeActivity.this,
-                        " No Notification", Toast.LENGTH_SHORT).show());
+        ivBell.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, NotificationActivity.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
 
         // views
         searchPill = findViewById(R.id.searchPill);
@@ -233,6 +235,23 @@ public class HomeActivity extends AppCompatActivity {
             };
             handler.post(typeWriter);
         }
+
+        // 🔹 4. POPULAR BRANDS SECTION
+        androidx.recyclerview.widget.RecyclerView rvPopularBrands = findViewById(R.id.rvPopularBrands);
+        rvPopularBrands.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(
+                this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false));
+        
+        java.util.List<BrandItem> popularBrands = new java.util.ArrayList<>();
+        // Honda, TVS, Hero, Yamaha, Bajaj, Royal Enfield
+        popularBrands.add(new BrandItem("Honda", R.drawable.brand_honda));
+        popularBrands.add(new BrandItem("TVS", R.drawable.brand_tvs));
+        popularBrands.add(new BrandItem("Hero", R.drawable.brand_hero));
+        popularBrands.add(new BrandItem("Yamaha", R.drawable.brand_yamaha));
+        popularBrands.add(new BrandItem("Bajaj", R.drawable.brand_bajaj));
+        popularBrands.add(new BrandItem("Royal Enfield", R.drawable.brand_royal_enfield));
+        
+        PopularBrandsHomeAdapter brandAdapter = new PopularBrandsHomeAdapter(this, popularBrands);
+        rvPopularBrands.setAdapter(brandAdapter);
     }
 
     private void updateDots(int position) {
