@@ -168,7 +168,7 @@ public class BrandActivity extends AppCompatActivity implements BrandAdapter.OnB
             case "bsa": return R.drawable.brand_bsa1;
             case "indian": return R.drawable.brand_indian;
             case "yezdi": return R.drawable.brand_yezdi;
-            case "keeway": return R.drawable.brand_keeway1;
+            case "keeway": return R.drawable.brand_keeway;
             case "vida": return R.drawable.brand_vida;
             case "zontes": return R.drawable.brand_zontes;
             case "river": return R.drawable.brand_river1;
