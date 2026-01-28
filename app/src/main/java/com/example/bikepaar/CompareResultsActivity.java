@@ -221,6 +221,9 @@ public class CompareResultsActivity extends AppCompatActivity {
                 setText(tvPriceValues[i], String.format("₹ %,d", b.price));
             }
         }
+        
+        // Highlight Best Specs
+        highlightBestSpecs();
     }
     
     private void setText(TextView tv, String text) {
@@ -255,6 +258,103 @@ public class CompareResultsActivity extends AppCompatActivity {
         if (tvRearSuspensions[index] != null) tvRearSuspensions[index].setVisibility(visibility);
 
         if (layoutPrices[index] != null) layoutPrices[index].setVisibility(visibility);
+    }
+
+    private void highlightBestSpecs() {
+        // 1. Price (Lower is Better)
+        double[] prices = new double[3];
+        for (int i=0; i<3; i++) prices[i] = (bikes[i] != null) ? bikes[i].price : -1;
+        highlightRow(tvPriceValues, prices, true); // Lower is better
+        highlightRow(tvPrices, prices, true);      // Also highlight header price
+
+        // 2. Engine / Displacement (Higher is Better)
+        highlightRowString(tvDisplacements, "engine", false);
+
+        // 3. Power (Higher is Better)
+        highlightRowString(tvPowers, "maxPower", false);
+
+        // 4. Torque (Higher is Better)
+        highlightRowString(tvTorques, "maxTorque", false);
+
+        // 5. Mileage (Higher is Better)
+        highlightRowString(tvMileages, "mileage", false);
+
+        // 6. Top Speed (Higher is Better)
+        highlightRowString(tvTopSpeeds, "topSpeed", false);
+
+        // 7. Fuel Tank (Higher is Better)
+        highlightRowString(tvFuelTanks, "fuelTank", false);
+
+        // 8. Kerb Weight (Lower is Better - usually, for agility)
+        highlightRowString(tvKerbWeights, "weight", true);
+    }
+
+    private void highlightRowString(TextView[] views, String type, boolean lowerIsBetter) {
+        double[] values = new double[3];
+        for (int i=0; i<3; i++) {
+            if (bikes[i] == null) {
+                values[i] = -1;
+                continue;
+            }
+            String val = "";
+            switch (type) {
+                case "engine": val = bikes[i].engine; break;
+                case "maxPower": val = bikes[i].getMaxPower(); break;
+                case "maxTorque": val = bikes[i].getMaxTorque(); break;
+                case "mileage": val = bikes[i].getMileage(); break;
+                case "topSpeed": val = bikes[i].getTopSpeed(); break;
+                case "fuelTank": val = bikes[i].getFuelTankCapacity(); break;
+                case "weight": val = bikes[i].getKerbWeight(); break;
+            }
+            values[i] = extractDouble(val);
+        }
+        highlightRow(views, values, lowerIsBetter);
+    }
+
+    private void highlightRow(TextView[] views, double[] values, boolean lowerIsBetter) {
+        // Find Best Value
+        double bestVal = lowerIsBetter ? Double.MAX_VALUE : -1.0;
+        boolean foundAny = false;
+
+        for (double v : values) {
+            if (v < 0) continue; // Skip invalid/null
+            foundAny = true;
+            if (lowerIsBetter) {
+                if (v < bestVal) bestVal = v;
+            } else {
+                if (v > bestVal) bestVal = v;
+            }
+        }
+
+        if (!foundAny) return;
+
+        // Apply Color
+        for (int i=0; i<3; i++) {
+            if (views[i] == null) continue;
+            
+            // Check if this view matches the best value
+            if (values[i] >= 0 && Math.abs(values[i] - bestVal) < 0.01) {
+                 views[i].setTextColor(android.graphics.Color.parseColor("#4CAF50")); // Green
+                 views[i].setTypeface(null, android.graphics.Typeface.BOLD);
+            } else {
+                 views[i].setTextColor(android.graphics.Color.BLACK); // Default
+                 views[i].setTypeface(null, android.graphics.Typeface.NORMAL);
+            }
+        }
+    }
+
+    private double extractDouble(String str) {
+        if (str == null || str.isEmpty()) return -1;
+        try {
+            // Regex to find the first number (integer or decimal)
+            java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("(\\d+(\\.\\d+)?)").matcher(str);
+            if (matcher.find()) {
+                return Double.parseDouble(matcher.group(1));
+            }
+        } catch (Exception e) {
+            return -1;
+        }
+        return -1;
     }
 
     @Override

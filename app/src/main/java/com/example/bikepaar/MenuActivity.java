@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private LinearLayout rowNewBikes, rowReviews, rowCompare, rowNews, rowSettings;
+    private LinearLayout rowNewBikes, rowReviews, rowCompare, rowNews, rowSettings, rowSubscription;
     private CardView btnBack;
 
     @Override
@@ -27,6 +27,7 @@ public class MenuActivity extends AppCompatActivity {
         rowReviews = findViewById(R.id.rowReviews);
         rowCompare = findViewById(R.id.rowCompare);
         rowNews = findViewById(R.id.rowNews);
+        rowSubscription = findViewById(R.id.rowSubscription);
         rowSettings = findViewById(R.id.rowSettings);
 
         // Back button with animation
@@ -86,6 +87,17 @@ public class MenuActivity extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
+
+        rowSubscription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animateButtonClick(v);
+                Intent intent = new Intent(MenuActivity.this, SubscriptionActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
         rowSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

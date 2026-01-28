@@ -460,7 +460,19 @@
                     android:clipToPadding="false"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp" 
-                    android:layout_marginBottom="24dp"/>
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- COMPARE YOUR FAVOURITE BUTTON -->
+                <Button
+                    android:id="@+id/btnCompareFav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:text="Compare Your Favourite"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="#FF0000"
+                    android:background="@drawable/view_all_bikes_button_bg" />
 
             </LinearLayout>
 

@@ -82,6 +82,14 @@ public class HomeActivity extends AppCompatActivity {
         btnBrand = findViewById(R.id.btnBrand);
         btnRecentLaunches = findViewById(R.id.btnRecentLaunches);
 
+        // 🔹 NEW: Compare Your Favourite Button
+        Button btnCompareFav = findViewById(R.id.btnCompareFav);
+        btnCompareFav.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, CompareActivity.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);   // highlight home
 

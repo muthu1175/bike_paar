@@ -258,6 +258,53 @@
 
             </LinearLayout>
 
+            <!-- SUBSCRIPTION CARD -->
+            <LinearLayout
+                android:id="@+id/rowSubscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_card_bg"
+                android:padding="16dp"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_marginBottom="8dp">
+
+                <!-- ICON CIRCLE -->
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="#FEF3C7"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_premium"
+                        android:tint="#D97706" />
+                </LinearLayout>
+
+                <!-- TEXT -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Subscription"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#111827" />
+
+                <!-- CHEVRON -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_chevron_right"
+                    android:tint="#9CA3AF" />
+
+            </LinearLayout>
+
             <!-- SETTINGS CARD -->
             <LinearLayout
                 android:id="@+id/rowSettings"

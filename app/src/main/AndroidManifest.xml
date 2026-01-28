@@ -68,7 +68,7 @@
 
         <activity
             android:name=".EditPersonalActivity" />
-        <activity android:name=".SettingsActivity" />
+
         <activity
             android:name=".FeedbackActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -118,6 +118,14 @@
             android:name=".ScramblerBikesActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".SubscriptionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NotificationActivity"
             android:exported="false"
