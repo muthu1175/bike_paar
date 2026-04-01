@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:fitsSystemWindows="true">
+
+    <!-- TOP BAR -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/ivMenu_q7"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_menu" />
+
+        <ImageView
+            android:id="@+id/ivLogo_q7"
+            android:layout_width="120dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bikepaar_logo" />
+
+        <ImageView
+            android:id="@+id/ivBell_q7"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_notifications" />
+    </RelativeLayout>
+
+    <!-- full card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="66dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/ai_card_bg">
+
+        <!-- header row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvLabel_q7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI Suggestion"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvStep_q7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7/9"
+                android:textColor="#FFFFFF" />
+
+            <ImageView
+                android:id="@+id/btnClose_q7"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="12dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="#FFFFFF" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar_q7"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="8dp"
+            android:progress="7"
+            android:max="9"
+            android:progressTint="#27AE60"
+            android:backgroundTint="#DDDDDD" />
+
+        <!-- center icon -->
+        <ImageView
+            android:id="@+id/ic_comfort_big"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="28dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_comfort_big" />
+
+        <!-- question -->
+        <TextView
+            android:id="@+id/tvQuestion_q7"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comfort preference?"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/tvSub_q7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Riding position matters"
+            android:textColor="#BFE0FF"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="6dp"/>
+
+        <!-- options -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="18dp">
+
+            <!-- High comfort -->
+            <RelativeLayout
+                android:id="@+id/optHighComfort"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/option_selected_bg">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/ic_emoji"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="high comfort"
+                    android:textColor="#222222"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_toEndOf="@id/optHighComfort"
+                    android:layout_marginStart="64dp"
+                    android:layout_alignParentTop="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="relaxed riding position"
+                    android:textColor="#666666"
+                    android:textSize="12sp"
+                    android:layout_toEndOf="@id/optHighComfort"
+                    android:layout_marginStart="64dp"
+                    android:layout_below="@id/optHighComfort"
+                    android:layout_marginTop="28dp" />
+
+                <ImageView
+                    android:id="@+id/ivHighTick"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_radio_selected"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <!-- Medium comfort -->
+            <RelativeLayout
+                android:id="@+id/optMediumComfort"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/option_bg">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/ic_thumb"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="medium comfort"
+                    android:textColor="#222222"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_toEndOf="@id/optMediumComfort"
+                    android:layout_marginStart="64dp"
+                    android:layout_alignParentTop="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="balanced"
+                    android:textColor="#666666"
+                    android:textSize="12sp"
+                    android:layout_toEndOf="@id/optMediumComfort"
+                    android:layout_marginStart="64dp"
+                    android:layout_below="@id/optMediumComfort"
+                    android:layout_marginTop="28dp" />
+
+                <ImageView
+                    android:id="@+id/ivMedTick"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_radio_unselected"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <!-- Sporty -->
+            <RelativeLayout
+                android:id="@+id/optSporty"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:padding="12dp"
+                android:background="@drawable/option_bg">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/ic_motorcycle_small"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sporty"
+                    android:textColor="#222222"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_toEndOf="@id/optSporty"
+                    android:layout_marginStart="64dp"
+                    android:layout_alignParentTop="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="aggressive riding"
+                    android:textColor="#666666"
+                    android:textSize="12sp"
+                    android:layout_toEndOf="@id/optSporty"
+                    android:layout_marginStart="64dp"
+                    android:layout_below="@id/optSporty"
+                    android:layout_marginTop="28dp" />
+
+                <ImageView
+                    android:id="@+id/ivSportTick"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_radio_unselected"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"/>
+
+        <!-- buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/btnBack_q7"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="back"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/ai_prev_button_bg"/>
+
+            <TextView
+                android:id="@+id/btnNext_q7"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:text="next  →"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/ai_next_button_bg"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

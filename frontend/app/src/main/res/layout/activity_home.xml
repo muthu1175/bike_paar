@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:fitsSystemWindows="true"
+    android:paddingBottom="0dp">
+
+    <!-- TOP BAR -->
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/ivMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_menu" />
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="520dp"
+            android:layout_height="324dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bikepaar_logo" />
+
+        <ImageView
+            android:id="@+id/ivBell"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_notifications" />
+    </RelativeLayout>
+
+    <!-- MAIN SCROLL CONTENT -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="110dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- HEADER IMAGE + TEXT + SEARCH -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
+
+                <ImageView
+                    android:id="@+id/headerImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/home_header" />
+
+                <TextView
+                    android:id="@+id/tvWelcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="welcome"
+                    android:textColor="#FFC65C"
+                    android:textStyle="bold"
+                    android:textSize="36sp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:id="@+id/tvSubTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="find your dream motorcycle\nhere!!"
+                    android:textSize="13sp"
+                    android:textColor="#FFA843"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="90dp" />
+
+                <!-- SEARCH PILL -->
+                <LinearLayout
+                    android:id="@+id/searchPill"
+                    android:layout_width="260dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="145dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/search_pill_bg"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_search_white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="search"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:layout_marginStart="10dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvTagline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="bringing AI to choose the comfort bike"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="cursive"
+                    android:textStyle="bold"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp" />
+            </FrameLayout>
+
+            <!-- CATEGORY TABS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <!-- TAB 1 -->
+                <LinearLayout
+                    android:id="@+id/btnMostPopular"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/tab_background_selector"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_trending_up"
+                    android:tint="#FFFFFF" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="most popular"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp"
+                    android:layout_marginStart="6dp" />
+            </LinearLayout>
+
+            <!-- TAB 2 -->
+            <LinearLayout
+                android:id="@+id/btnBrand"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/tab_background_selector"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_margin="4dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_star1"
+                android:tint="#FFFFFF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="brand"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:layout_marginStart="6dp" />
+        </LinearLayout>
+
+        <!-- TAB 3 -->
+        <LinearLayout
+            android:id="@+id/btnRecentLaunches"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/tab_background_selector"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_margin="4dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_arrow_downward"
+            android:tint="#FFFFFF"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="recent launches"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:layout_marginStart="6dp" />
+    </LinearLayout>
+</LinearLayout>
+
+
+    <!-- SLIDER + DOTS -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="210dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPagerBikes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/dotsLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <View
+                        android:id="@+id/dot1"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/dot_active"
+                        android:layout_margin="3dp" />
+
+                    <View
+                        android:id="@+id/dot2"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/dot_inactive"
+                        android:layout_margin="3dp" />
+
+                    <View
+                        android:id="@+id/dot3"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/dot_inactive"
+                        android:layout_margin="3dp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- DISCOVER BIKES SECTION -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Discover bikes"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/discoverList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="24dp">
+
+                <!-- Displacement -->
+                <LinearLayout
+                    android:id="@+id/rowDisplacement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#E0E0E0"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_displacement"
+                        android:tint="#FF6D00" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Displacement"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="choose your desired displacement(cc)"
+                            android:textSize="12sp"
+                            android:textColor="#555555" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#F4F4F4" />
+
+                <!-- Budget -->
+                <LinearLayout
+                    android:id="@+id/rowBudget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#E0E0E0"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_budget"
+                        android:tint="#FF6D00" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Budget"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="view bikes in your price range"
+                            android:textSize="12sp"
+                            android:textColor="#555555" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#F4F4F4" />
+
+                <!-- Ride style -->
+                <LinearLayout
+                    android:id="@+id/rowRideStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#E0E0E0"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_ridestyle"
+                        android:tint="#FF6D00" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ride style"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="view bikes that suit your riding style"
+                            android:textSize="12sp"
+                            android:textColor="#555555" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- VIEW ALL BIKES BUTTON -->
+                <Button
+                    android:id="@+id/btnViewAllBikes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="View All Bikes"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="#FF0000"
+                    android:background="@drawable/view_all_bikes_button_bg" />
+
+                 <!-- POPULAR BRANDS SECTION -->
+                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="Popular Brands"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:fontFamily="cursive"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPopularBrands"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp" />
+
+                <!-- POPULAR COMPARISON SECTION -->
+                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="Popular Compare"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:fontFamily="cursive"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPopularCompare"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp" 
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- COMPARE YOUR FAVOURITE BUTTON -->
+                <Button
+                    android:id="@+id/btnCompareFav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:text="Compare Your Favourite"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="#FF0000"
+                    android:background="@drawable/view_all_bikes_button_bg" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <!-- FLOATING AI CIRCLE (COMMON FOR ALL SCREENS) -->
+
+    <FrameLayout
+        android:id="@+id/aiContainer"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:translationY="-54dp"
+        android:elevation="20dp"
+        android:background="@drawable/ai_button_bg">
+
+        <ImageView
+            android:id="@+id/aiButton"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_ai" />
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="4dp"
+        android:background="@android:color/white"
+        android:elevation="6dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        app:itemIconSize="20dp"
+        app:itemIconTint="@android:color/black"
+        app:itemTextColor="@android:color/black"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
