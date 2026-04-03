@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.Context;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MostPopularActivity extends AppCompatActivity {
 
@@ -35,8 +39,7 @@ public class MostPopularActivity extends AppCompatActivity {
 
         // Setup RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MostPopularAdapter(getBikeList());
-        recyclerView.setAdapter(adapter);
+        fetchPopularBikes();
 
         // Bottom Navigation
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -58,82 +61,29 @@ public class MostPopularActivity extends AppCompatActivity {
         });
     }
 
-    private List<BikeModel> getBikeList() {
-        List<BikeModel> list = new ArrayList<>();
-        list.add(new BikeModel(
-                "Yamaha R15 V4",
-                "The R15 V4 offers track-inspired performance with a 155cc liquid-cooled engine and quick shifter.",
-                "₹1,82,500",
-                "High Demand",
-                "#1 Seller",
-                "",
-                false,
-                0
-        ));
-        list.add(new BikeModel(
-                "Royal Enfield Classic",
-                "Timeless design meets modern reliability. The ultimate cruiser for long rides and city commutes.",
-                "₹2,20,000",
-                "4.8 (12k+ sold)",
-                "",
-                "★",
-                false,
-                0
-        ));
-        list.add(new BikeModel(
-                "KTM Duke 390",
-                "The corner rocket. Aggressive styling, explosive power, and top-tier electronics package.",
-                "₹3,60,000",
-                "4.9 (8k+ sold)",
-                "Hot",
-                "★",
-                false,
-                0
-        ));
-        list.add(new BikeModel(
-                "Honda CBR 650R",
-                "A middleweight sports tourer with inline-4 smoothness and everyday practicality.",
-                "₹9,30,000",
-                "Top Rated",
-                "",
-                "",
-                false,
-                0
-        ));
-        list.add(new BikeModel(
-                "BMW G 310 R",
-                "Premium roadster experience in a compact package. Agile handling for the urban jungle.",
-                "₹2,85,000",
-                "4.6 (5k+ sold)",
-                "",
-                "★",
-                false,
-                0
-        ));
-        return list;
-    }
-
-    // Bike Model Class
-    public static class BikeModel {
-        String title;
-        String description;
-        String price;
-        String tag;
-        String badge;
-        String ratingIcon;
-        boolean isFavorite;
-        int imageRes;
-
-        public BikeModel(String title, String description, String price, String tag,
-                         String badge, String ratingIcon, boolean isFavorite, int imageRes) {
-            this.title = title;
-            this.description = description;
-            this.price = price;
-            this.tag = tag;
-            this.badge = badge;
-            this.ratingIcon = ratingIcon;
-            this.isFavorite = isFavorite;
-            this.imageRes = imageRes;
+    private void fetchPopularBikes() {
+        String tokenRaw = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE).getString("TOKEN", "");
+        String token = "";
+        if (!tokenRaw.isEmpty()) {
+            token = "Token " + tokenRaw;
         }
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getPopularBikes(token).enqueue(new Callback<List<Bike>>() {
+            @Override
+            public void onResponse(Call<List<Bike>> call, Response<List<Bike>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    adapter = new MostPopularAdapter(response.body());
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(MostPopularActivity.this, "Failed to load popular bikes", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Bike>> call, Throwable t) {
+                Toast.makeText(MostPopularActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

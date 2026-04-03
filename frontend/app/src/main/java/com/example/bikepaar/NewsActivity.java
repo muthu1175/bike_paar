@@ -1,75 +1,105 @@
 package com.example.bikepaar;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.viewpager2.widget.ViewPager2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewsActivity extends AppCompatActivity {
 
     private ImageButton btnBack;
-    private CardView featuredNews, news1, news2, news3, news4;
+    private CardView news1, news2, news4;
+    private Button btnBikeMaintenance;
+    private ViewPager2 vpUpcomingBikes;
+    private Handler sliderHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        
+        try {
+            setContentView(R.layout.activity_news);
 
-        // Initialize views
-        btnBack = findViewById(R.id.btnBack);
-        featuredNews = findViewById(R.id.featuredNews);
-        news1 = findViewById(R.id.news1);
-        news2 = findViewById(R.id.news2);
-        news3 = findViewById(R.id.news3);
-        news4 = findViewById(R.id.news4);
+            btnBack = findViewById(R.id.btnBack);
+            news1 = findViewById(R.id.news1);
+            news2 = findViewById(R.id.news2);
+            news4 = findViewById(R.id.news4);
+            btnBikeMaintenance = findViewById(R.id.btnBikeMaintenance);
+            vpUpcomingBikes = findViewById(R.id.vpUpcomingBikes);
 
-        // Back button click
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
+            if (btnBack != null) {
+                btnBack.setOnClickListener(v -> onBackPressed());
             }
-        });
 
-        // Set click listeners for news items
-        featuredNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle featured news click
-                // Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
-                // startActivity(intent);
-            }
-        });
+            if (vpUpcomingBikes != null) {
+                List<UpcomingBikesAdapter.UpcomingBike> upcomingList = new ArrayList<>();
+                upcomingList.add(new UpcomingBikesAdapter.UpcomingBike("KTM 390 Adventure R", "Launching Q4 2024. Next-gen off-roader.", R.drawable.sample_bike));
+                upcomingList.add(new UpcomingBikesAdapter.UpcomingBike("Royal Enfield Classic 650", "The highly anticipated twin-cylinder classic.", R.drawable.sample_bike));
+                upcomingList.add(new UpcomingBikesAdapter.UpcomingBike("Bajaj Pulsar N125", "Affordable performance wrapped in new styling.", R.drawable.sample_bike));
 
-        news1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle news 1 click
-            }
-        });
+                UpcomingBikesAdapter adapter = new UpcomingBikesAdapter(upcomingList);
+                vpUpcomingBikes.setAdapter(adapter);
 
-        news2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle news 2 click
+                vpUpcomingBikes.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        sliderHandler.removeCallbacks(sliderRunnable);
+                        sliderHandler.postDelayed(sliderRunnable, 3000);
+                    }
+                });
             }
-        });
 
-        news3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle news 3 click
+            if (btnBikeMaintenance != null) {
+                btnBikeMaintenance.setOnClickListener(v -> {
+                    startActivity(new Intent(NewsActivity.this, MaintenanceActivity.class));
+                });
             }
-        });
 
-        news4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle news 4 click
+            if (news1 != null) news1.setOnClickListener(v -> {});
+            if (news2 != null) news2.setOnClickListener(v -> {});
+            if (news4 != null) news4.setOnClickListener(v -> {});
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            android.widget.Toast.makeText(this, "Crash error details: " + e.getMessage(), android.widget.Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private Runnable sliderRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (vpUpcomingBikes != null && vpUpcomingBikes.getAdapter() != null) {
+                int currentItem = vpUpcomingBikes.getCurrentItem();
+                int nextItem = currentItem + 1;
+                if (nextItem >= vpUpcomingBikes.getAdapter().getItemCount()) {
+                    nextItem = 0;
+                }
+                vpUpcomingBikes.setCurrentItem(nextItem, true);
             }
-        });
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sliderHandler.removeCallbacks(sliderRunnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (vpUpcomingBikes != null) {
+            sliderHandler.postDelayed(sliderRunnable, 3000);
+        }
     }
 
     @Override

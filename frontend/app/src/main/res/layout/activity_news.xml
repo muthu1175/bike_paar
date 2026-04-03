@@ -71,74 +71,14 @@
             android:paddingHorizontal="16dp"
             android:paddingBottom="24dp">
 
-            <!-- Featured News (Upcoming) -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/featuredNews"
+            <!-- Upcoming Bikes Slider -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vpUpcomingBikes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="#FFFFFF"
-                android:layout_marginBottom="24dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <!-- Featured Image -->
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="220dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/sample_bike"
-                        android:contentDescription="Featured Upcoming Launch" />
-
-                    <!-- UPCOMING badge -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="UPCOMING"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="4dp"
-                        android:background="#EA580C"
-                        android:layout_margin="12dp"
-                        android:elevation="4dp" />
-
-                    <!-- Gradient overlay and text -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@drawable/gradient_bottom"
-                        android:padding="16dp"
-                        android:layout_alignParentBottom="true">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="New Royal Enfield Himalayan 450 Coming Soon"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#FFFFFF"
-                            android:lineSpacingExtra="2dp"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Launch expected next month. Check out leaked specs."
-                            android:textSize="12sp"
-                            android:textColor="#E5E7EB"
-                            android:maxLines="1"
-                            android:ellipsize="end" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-
+                android:layout_height="220dp"
+                android:layout_marginBottom="24dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"/>
 
             <!-- Upcoming Launches Title -->
             <TextView
@@ -219,7 +159,6 @@
                             android:ellipsize="end"
                             android:layout_marginTop="4dp" />
 
-
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -288,7 +227,6 @@
                             android:ellipsize="end"
                             android:layout_marginTop="4dp" />
 
-
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -304,84 +242,18 @@
                 android:layout_marginBottom="16px"
                 android:layout_marginTop="16px" />
 
-            <!-- News Item 3 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/news3"
+            <!-- Maintenance Guide Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBikeMaintenance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="#FFFFFF"
-                android:layout_marginBottom="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_power"
-                        android:contentDescription="MotoGP"
-                        android:background="#E5E7EB"
-                        android:padding="2dp" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:paddingStart="12dp"
-                        android:paddingTop="4dp">
-
-                        <!-- Maintenance Tips Title Inserted Above news3 technically, but doing it here inside content is easier to just change content -->
-                        <!-- Wait, I should insert the Header TextView BEFORE news3 in the parent linear layout. But multi_replace operates on blocks. -->
-                        <!-- I will just change this item to Maintenance Tip 1 -->
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MAINTENANCE"
-                            android:textSize="10sp"
-                            android:textStyle="bold"
-                            android:textColor="#EA580C"
-                            android:letterSpacing="0.05"
-                            android:layout_marginBottom="4dp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="How to Lube Your Chain Correctly"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="#111827"
-                            android:maxLines="2"
-                            android:ellipsize="end"
-                            android:lineSpacingExtra="2dp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Extend chain life with these simple steps."
-                            android:textSize="12sp"
-                            android:textColor="#4B5563"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:layout_marginTop="4dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2 days ago"
-                            android:textSize="10sp"
-                            android:textColor="#4B5563"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:text="Bikes Maintenance Guide"
+                app:backgroundTint="#EA580C"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp"
+                android:textStyle="bold"
+                android:stateListAnimator="@null" />
 
             <!-- News Item 4 -->
             <androidx.cardview.widget.CardView
@@ -446,7 +318,6 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:layout_marginTop="4dp" />
-
 
                     </LinearLayout>
                 </LinearLayout>

@@ -96,14 +96,11 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 animateButtonClick(v);
 
-                // Clear user session/data if any
-                // Example using SharedPreferences:
-        /*
-        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-        */
+                // Clear user session/data
+                android.content.SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+                android.content.SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+                editor.apply();
 
                 // Navigate to LoginActivity
                 Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);

@@ -2742,3 +2742,79 @@ class VerifyEmailOTPView(APIView):
         except EmailOTP.DoesNotExist:
             return Response({"error": "Invalid OTP"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class PopularBikesAPIView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        popular_terms = ["r15", "classic 350", "duke 390", "pulsar", "apache", "splendor", "mt 15", "bullet", "himalayan", "hunter"]
+        df = pd.read_excel(EXCEL_PATH, header=1)
+        df.columns = df.columns.astype(str).str.lower().str.strip()
+        df = df.replace({np.nan: ""})
+        cols = get_all_columns(df)
+        model_col = cols['model']
+        
+        user_favs = set()
+        if request.user.is_authenticated:
+             user_favs = set(FavouriteBike.objects.filter(user=request.user).values_list('model', flat=True))
+
+        if not model_col:
+             return Response({"error": "Model column not found"}, status=500)
+
+        mask = df[model_col].astype(str).str.lower().apply(lambda x: any(term in x for term in popular_terms))
+        result_df = df[mask]
+        result_df = result_df.head(15)
+
+        mapped_results = []
+        for _, row in result_df.iterrows():
+             price_val = parse_price(row.get(cols['price'], 0))
+             if price_val <= 0: continue
+             mapped_results.append(build_bike_entry(row, cols, user_favs, request))
+
+        return Response(mapped_results)
+
+
+class RecentLaunchesAPIView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        recent_bikes_by_brand = {
+            "Royal Enfield": ["himalayan 450", "shotgun 650", "guerrilla 450", "bear 650"],
+            "KTM": ["duke 390", "duke 250"],
+            "TVS": ["apache rtr 310", "x", "ronin"],
+            "Bajaj": ["pulsar ns400z", "freedom 125"],
+            "Hero": ["mavrick 440", "karizma xmr"],
+            "Honda": ["nx500", "cb350"],
+            "Yamaha": ["r3", "mt-03"]
+        }
+        all_recent_names = [bike for bikes in recent_bikes_by_brand.values() for bike in bikes]
+        
+        df = pd.read_excel(EXCEL_PATH, header=1)
+        df.columns = df.columns.astype(str).str.lower().str.strip()
+        df = df.replace({np.nan: ""})
+        cols = get_all_columns(df)
+        model_col = cols['model']
+        brand_col = cols.get('brand')
+        
+        user_favs = set()
+        if request.user.is_authenticated:
+             user_favs = set(FavouriteBike.objects.filter(user=request.user).values_list('model', flat=True))
+
+        if not model_col:
+             return Response({"error": "Model column not found"}, status=500)
+
+        mask = df[model_col].astype(str).str.lower().apply(lambda x: any(term in x for term in all_recent_names))
+        result_df = df[mask]
+        
+        if brand_col:
+            result_df = result_df.sort_values(by=brand_col)
+        else:
+            result_df = result_df.sort_values(by=model_col)
+
+        mapped_results = []
+        for _, row in result_df.iterrows():
+             price_val = parse_price(row.get(cols['price'], 0))
+             if price_val <= 0: continue
+             entry = build_bike_entry(row, cols, user_favs, request)
+             entry['usage'] = "Launched 2024-2025"
+             mapped_results.append(entry)
+
+        return Response(mapped_results)

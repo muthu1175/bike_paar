@@ -13,6 +13,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.content.Context;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecentLaunchesActivity extends AppCompatActivity {
 
@@ -36,8 +40,7 @@ public class RecentLaunchesActivity extends AppCompatActivity {
 
         // Setup RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecentLaunchesAdapter(getBikeList());
-        recyclerView.setAdapter(adapter);
+        fetchRecentBikes();
 
         // Bottom Navigation
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -59,75 +62,29 @@ public class RecentLaunchesActivity extends AppCompatActivity {
         });
     }
 
-    private List<BikeModel> getBikeList() {
-        List<BikeModel> list = new ArrayList<>();
-        list.add(new BikeModel(
-                "Ducati Panigale V4",
-                "Launched 2 days ago",
-                "₹24,995",
-                "299 km/h · 1103 cc",
-                true,
-                R.drawable.sample_bike,
-                "Just Arrived"
-        ));
-        list.add(new BikeModel(
-                "BMW S1000 RR",
-                "Ultimate performance for the road.",
-                "₹16,995",
-                "Oct 15",
-                false,
-                R.drawable.sample_bike,
-                "New"
-        ));
-        list.add(new BikeModel(
-                "Kawasaki Ninja ZX-10R",
-                "Race-ready aerodynamics.",
-                "₹17,199",
-                "Oct 10",
-                false,
-                R.drawable.sample_bike,
-                ""
-        ));
-        list.add(new BikeModel(
-                "Royal Enfield Hunter 350",
-                "Urban retro roadster.",
-                "₹4,300",
-                "Sep 28",
-                false,
-                R.drawable.sample_bike,
-                ""
-        ));
-        list.add(new BikeModel(
-                "Yamaha YZF-R1M",
-                "MotoGP technology for the street.",
-                "₹26,999",
-                "Sep 15",
-                false,
-                R.drawable.sample_bike,
-                ""
-        ));
-        return list;
-    }
-
-    // Bike Model Class
-    public static class BikeModel {
-        String title;
-        String description;
-        String price;
-        String specs;
-        boolean isFeatured;
-        int imageRes;
-        String tag;
-
-        public BikeModel(String title, String description, String price, String specs,
-                         boolean isFeatured, int imageRes, String tag) {
-            this.title = title;
-            this.description = description;
-            this.price = price;
-            this.specs = specs;
-            this.isFeatured = isFeatured;
-            this.imageRes = imageRes;
-            this.tag = tag;
+    private void fetchRecentBikes() {
+        String tokenRaw = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE).getString("TOKEN", "");
+        String token = "";
+        if (!tokenRaw.isEmpty()) {
+            token = "Token " + tokenRaw;
         }
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getRecentLaunches(token).enqueue(new Callback<List<Bike>>() {
+            @Override
+            public void onResponse(Call<List<Bike>> call, Response<List<Bike>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    adapter = new RecentLaunchesAdapter(response.body());
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(RecentLaunchesActivity.this, "Failed to load recent launches", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Bike>> call, Throwable t) {
+                Toast.makeText(RecentLaunchesActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

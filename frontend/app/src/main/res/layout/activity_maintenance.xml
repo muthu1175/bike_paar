@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="#F3F4F6">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="#111827" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bikes Maintenance"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#111827"
+                android:paddingStart="16dp" />
+        </LinearLayout>
+
+        <!-- Chain Maintenance -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chain Maintenance"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#EA580C"
+                    android:layout_marginBottom="8dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Clean and lube the chain every 500-1000 km.\n• Use a specialized chain cleaner, avoid harsh chemicals.\n• Check for chain tension (slack usually between 20-30mm).\n• Replace sprocket and chain set every 15,000-20,000 km depending on wear."
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:textColor="#4B5563"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Service Intervals -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Service Intervals"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#EA580C"
+                    android:layout_marginBottom="8dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• First Service: Usually at 500-1000 km or 1 month.\n• Regular Services: Every 3000-5000 km or 6 months.\n• Engine Oil: Replace every 3000-5000 km based on grade.\n• Oil Filter &amp; Air Filter: Inspect directly or change every 10,000 km."
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:textColor="#4B5563"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Battery Maintenance -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Battery Maintenance"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#EA580C"
+                    android:layout_marginBottom="8dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Inspect battery terminals for corrosion and clean with petroleum jelly.\n• If keeping the bike idle for long, remove the negative terminal.\n• Ensure battery fluid levels are topped up (for lead-acid).\n• Standard battery lifespan is usually 2.5 to 3.5 years."
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:textColor="#4B5563"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Tires & Brakes -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="16dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tires &amp; Brakes"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#EA580C"
+                    android:layout_marginBottom="8dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="• Check tire pressure weekly; under-inflation affects mileage.\n• Monitor tire treads deeply, replace if wear indicators are met.\n• Check brake fluid levels in the master cylinder routinely.\n• Replace brake pads if they go thinner than 2-3mm to avoid squealing."
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:textColor="#4B5563"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>

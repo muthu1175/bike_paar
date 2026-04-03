@@ -13,6 +13,7 @@ public class Bike implements Serializable {
     public int minRangeKm; // approximate comfortable daily distance (for matching)
     public String fuelCategory; // "high" / "medium" / "low" (efficiency)
     public String experience; // "Beginner","Intermediate","Expert"
+    public String description; // Description from backend
 
     // New fields for HTML/budget design
     public String engine; // Engine capacity like "97.2 cc"
@@ -21,6 +22,7 @@ public class Bike implements Serializable {
     public String badge; // Badge text like "Top Seller", "High Mileage"
     public boolean isFavorite; // Favorite status
     public boolean isPopular; // Popular flag for sorting
+    public String brand; // Brand from DB
 
     // Dynamic Specifications
     @SerializedName("max_power") public String maxPower;

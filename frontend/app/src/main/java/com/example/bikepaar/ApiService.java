@@ -172,6 +172,12 @@ public interface ApiService {
     @GET("bikes/by-brand/")
     Call<List<Bike>> getBrandBikes(@Header("Authorization") String token, @Query("brand") String brand);
 
+    @GET("bikes/popular/")
+    Call<List<Bike>> getPopularBikes(@Header("Authorization") String token);
+
+    @GET("bikes/recent/")
+    Call<List<Bike>> getRecentLaunches(@Header("Authorization") String token);
+
     // Email OTP Verification
     @POST("send-email-otp/")
     Call<Map<String, String>> sendEmailOTP(@Body Map<String, String> body);

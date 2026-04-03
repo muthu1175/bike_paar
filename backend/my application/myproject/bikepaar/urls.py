@@ -32,7 +32,8 @@ from .views import FeedbackAPIView
 from .views import BikesByBrandAPIView
 from .views import BikeDetailsAPIView
 from .views import BikeFullSpecificationsAPIView
-
+from .views import PopularBikesAPIView
+from .views import RecentLaunchesAPIView
 urlpatterns = [
     path('signup/', signup, name='signup'), 
      path('login/', login, name='login'),
@@ -76,8 +77,9 @@ urlpatterns = [
         path("bikes/full-specs/", BikeFullSpecificationsAPIView.as_view()),
         path('send-email-otp/', SendEmailOTPView.as_view(), name='send-email-otp'),
         path('verify-email-otp/', VerifyEmailOTPView.as_view(), name='verify-email-otp'),
+        path('bikes/popular/', PopularBikesAPIView.as_view(), name='popular-bikes'),
+        path('bikes/recent/', RecentLaunchesAPIView.as_view(), name='recent-bikes'),
 ]
-
 
 
 

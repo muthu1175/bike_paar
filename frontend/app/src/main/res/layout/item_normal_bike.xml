@@ -2,53 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginBottom="12dp"
-    android:background="@drawable/card_background"
-    android:padding="12dp"
-    android:elevation="1dp">
-
-    <RelativeLayout
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="12dp">
-
-        <ImageView
-            android:id="@+id/ivBike"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:background="#E0E0E0"/>
-
-        <TextView
-            android:id="@+id/tvTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="4dp"
-            android:background="@drawable/new_tag_background"
-            android:paddingHorizontal="6dp"
-            android:paddingVertical="2dp"
-            android:text="New"
-            android:textColor="@android:color/white"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:visibility="gone"/>
-
-    </RelativeLayout>
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:id="@+id/llBrandHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="4dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivBrandLogoHeader"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:id="@+id/tvBrandHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Brand Name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#C3362B"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/card_background"
+        android:padding="12dp"
+        android:elevation="1dp">
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="12dp">
+
+            <ImageView
+                android:id="@+id/ivBike"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="#E0E0E0"/>
+
+            <TextView
+                android:id="@+id/tvTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="4dp"
+                android:background="@drawable/new_tag_background"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:text="New"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -71,37 +98,49 @@
                 android:maxLines="1"
                 android:ellipsize="end"/>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/tvPrice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="₹16,995"
-                android:textColor="#233975"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-
             <TextView
                 android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="Oct 15"
                 android:textColor="#666666"
                 android:textSize="12sp"
                 android:drawableStart="@drawable/ic_calendar"
-                android:drawablePadding="4dp"
-                android:gravity="center_vertical"/>
+                android:drawablePadding="4dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="₹16,995"
+                    android:textColor="#233975"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+                    
+                <Button
+                    android:id="@+id/btnViewDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:backgroundTint="#F25B28"
+                    android:text="View Details"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    android:layout_marginStart="4dp"
+                    android:includeFontPadding="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingHorizontal="8dp"/>
+            </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>
