@@ -231,6 +231,20 @@ def resolve_bike_image_url(model_name, request=None):
         squashed_name,           # No spaces/chars
     ]
     
+    # Strip first words (usually brand) and add variants
+    parts = clean_name.split()
+    if len(parts) > 1:
+        # Try stripping 1 word (e.g. Honda Activa -> Activa)
+        no_brand1 = " ".join(parts[1:])
+        candidates.append(no_brand1)
+        candidates.append(re.sub(r'[^a-z0-9]', '', no_brand1))
+        
+        # Try stripping 2 words (e.g. Royal Enfield Classic -> Classic)
+        if len(parts) > 2:
+            no_brand2 = " ".join(parts[2:])
+            candidates.append(no_brand2)
+            candidates.append(re.sub(r'[^a-z0-9]', '', no_brand2))
+    
     # Add more fuzzy candidates (removal of common suffixes)
     fuzzy_name = re.sub(r'\s(bs[46]|abs|fi|edition|disc|drum|hybrid|connected|pro|plus|gen\s?2|4kwh|special|classic)$', '', clean_name)
     if fuzzy_name != clean_name:
@@ -240,17 +254,16 @@ def resolve_bike_image_url(model_name, request=None):
             re.sub(r'[^a-z0-9]', '', fuzzy_name)
         ])
 
-    # Extensions to check
-    extensions = ['.jpg', '.jpeg', '.png', '.webp', '.avif']
-    
-    # 3. Check filesystem
-    # block removed - using cache
+    # Extensions to check (Prioritize premium transparent formats)
+    extensions = ['.png', '.webp', '.avif', '.jpg', '.jpeg']
         
-    # Priority 1: Exact matches or variants
-    for cand in candidates:
-        if not cand: continue
+    # Priority 1: Strict Squash (Space-insensitive but length-identical equality)
+    # This matches 'Pulsar 150' to 'pulsar150.jpg' or 'r15 m' to 'r15m.png'
+    # without risk of 'r15' matching 'r15m'
+    cand_squashed = re.sub(r'[^a-z0-9]', '', raw_name)
+    if cand_squashed:
         for ext in extensions:
-            test_file = f"{cand}{ext}"
+            test_file = f"{cand_squashed}{ext}"
             if test_file in available_files_lower:
                 actual_filename = available_files_lower[test_file]
                 relative_path = f"bikes/{actual_filename}"
@@ -258,18 +271,14 @@ def resolve_bike_image_url(model_name, request=None):
                     return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
                 return settings.MEDIA_URL + relative_path
 
-    # Priority 2: Substring matching (Stronger)
-    # Check if any candidate is a significant part of the filename or vice versa
+    # Priority 2: Exact variants (Dashes, Underscores, etc.)
     for cand in candidates:
-        if len(cand) < 4: continue
-        cand_squashed = cand.replace(' ', '')
-        for f_lower, f_original in available_files_lower.items():
-            f_base = os.path.splitext(f_lower)[0]
-            f_base_squashed = f_base.replace(' ', '').replace('-', '').replace('_', '')
-            
-            # Check squashed substring or contains
-            if cand_squashed in f_base_squashed or f_base_squashed in cand_squashed:
-                relative_path = f"bikes/{f_original}"
+        if not cand: continue
+        for ext in extensions:
+            test_file = f"{cand}{ext}"
+            if test_file in available_files_lower:
+                actual_filename = available_files_lower[test_file]
+                relative_path = f"bikes/{actual_filename}"
                 if request:
                     return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
                 return settings.MEDIA_URL + relative_path
@@ -326,7 +335,8 @@ def get_all_columns(df):
         'overall_length': find_col(["overall length", "length"]),
         'overall_width': find_col(["overall width", "width"]),
         'seat_height': find_col(["seat height", "saddle height"]),
-        'ground_clearance': find_col(["ground clearance", "clearance"])
+        'ground_clearance': find_col(["ground clearance", "clearance"]),
+        'instrument_cluster': find_col(["instrument cluster", "cluster", "console"])
     }
 
 def build_bike_entry(row, cols, user_favs, request=None):
@@ -371,6 +381,7 @@ def build_bike_entry(row, cols, user_favs, request=None):
         "fuel_tank_capacity": row.get(cols.get('fuel_tank_capacity'), ""),
         "braking_system": row.get(cols.get('braking_system'), ""),
         "top_speed": row.get(cols.get('top_speed'), ""),
+        "instrument_cluster": row.get(cols.get('instrument_cluster'), ""),
         
         # Full Specs
         "front_brake_type": row.get(cols.get('front_brake_type'), ""),
@@ -516,7 +527,8 @@ class AiSuggestAPIView(APIView):
 
                         if not is_match:
                              if strict_mode: continue 
-                             else: score -= 30 # Relaxed penalty for category in fallback
+                             else: score -= 45 # Heavy Relaxed penalty for category in fallback
+                        else: score += 15
 
                     # --- 3. Usage Filter ---
                     if usage:
@@ -524,16 +536,18 @@ class AiSuggestAPIView(APIView):
                             is_adv_bike = "adv" in row_cat or "adventure" in row_cat or "scrambler" in row_cat or "off-road" in row_usage
                             if not is_adv_bike:
                                  if strict_mode: continue
-                                 else: score -= 30
+                                 else: score -= 45 # Heavy penalty
 
                     # --- 4. Budget ---
+                    # max 25 points
                     if budget > 0 and price_val > 0:
-                        if price_val <= budget: score += 30
-                        elif price_val <= (budget * 1.15): score += 20
+                        if price_val <= budget: score += 25
+                        elif price_val <= (budget * 1.15): score += 15
                         elif price_val <= (budget * 1.25): score += 5
-                        else: score -= 10
+                        else: score -= 15
 
                     # --- 5. Experience / CC ---
+                    # max 15 points
                     row_cc = 0
                     try:
                         e_str = str(row.get(engine_col, 0))
@@ -543,17 +557,18 @@ class AiSuggestAPIView(APIView):
 
                     if experience:
                         if "beginner" in experience:
-                            if row_cc <= 200: score += 20
-                            elif row_cc <= 350: score += 10
+                            if row_cc <= 200: score += 15
+                            elif row_cc <= 350: score += 5
                             else: score -= 20 
                         elif "intermediate" in experience:
-                            if 150 <= row_cc <= 650: score += 20
+                            if 150 <= row_cc <= 650: score += 15
                             else: score += 5 
                         elif "expert" in experience:
-                            if row_cc >= 400: score += 20
-                            elif row_cc >= 250: score += 10
+                            if row_cc >= 400: score += 15
+                            elif row_cc >= 250: score += 5
 
                     # --- 6. Mileage ---
+                    # max 15 points
                     row_mileage = 0
                     try:
                         m_str = str(row.get(mileage_col, 0))
@@ -573,27 +588,54 @@ class AiSuggestAPIView(APIView):
                             else: score += 10
                     
                     # --- 7. Usage / Comfort ---
+                    # max 10 points for usage, max 10 points for comfort
                     if usage:
                         if "daily" in usage or "commute" in usage:
-                            if "commuter" in row_cat or "scooter" in row_type or row_mileage > 45: score += 15
+                            if "commuter" in row_cat or "scooter" in row_type or row_mileage > 45: score += 10
                         elif "tour" in usage or "long" in usage:
-                            if "cruiser" in row_cat or "adv" in row_cat or "tour" in row_cat: score += 15
-                            elif row_cc > 200: score += 10
+                            if "cruiser" in row_cat or "adv" in row_cat or "tour" in row_cat: score += 10
+                            elif row_cc > 200: score += 5
+                        elif "track" in usage or "race" in usage:
+                            if "sport" in row_cat: score += 10
+                            elif row_cc > 200: score += 5
 
+                    if comfort:
+                        if "high" in comfort:
+                            if "high" in row_comfort: score += 10
+                            elif "medium" in row_comfort: score += 5
+                            else: score -= 5
+                        elif "medium" in comfort:
+                            if "medium" in row_comfort or "high" in row_comfort: score += 10
+                        elif "low" in comfort or "aggressive" in comfort:
+                            if "aggressive" in row_comfort: score += 10
+                            else: score += 5
+                            
                     # --- 8. Ride With ---
+                    # max 5 points
                     if ride_with and "family" in ride_with:
                         if "split seat" not in str(row.get("seat_type", "")).lower(): score += 5
-                        if "scooter" in row_type or "cruiser" in row_cat: score += 5
+                        elif "scooter" in row_type or "cruiser" in row_cat: score += 5
+                    elif ride_with and ("solo" in ride_with or "friends" in ride_with):
+                        score += 5
+                    else:
+                        score += 5 # Default if valid but unhandled input
                     
+                    # --- 9. Distance KM ---
+                    # max 5 points
                     if distance_km > 50:
                          if row_cc > 150 or "liquid" in str(row.get("cooling", "")).lower(): score += 5
+                         elif row_mileage > 40: score += 2
                     else: 
                          score += 5 
 
                     # Normalize
                     if score < 0: score = 0
                     if score > 100: score = 100
-                    if score < 50: continue # Min threshold
+                    
+                    if strict_mode:
+                        if score < 50: continue # Min threshold for strict matches
+                    else:
+                        if score < 20: continue # Relaxed threshold so fallback bikes still show up
 
                     bike_name = str(row.get(model_col, ""))
                     details_row = None

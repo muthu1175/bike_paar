@@ -32,6 +32,7 @@ public class Bike implements Serializable {
     @SerializedName("fuel_tank_capacity") public String fuelTankCapacity;
     @SerializedName("braking_system") public String brakingSystem;
     @SerializedName("top_speed") public String topSpeed;
+    @SerializedName("instrument_cluster") public String instrumentCluster;
 
     // Full Specifications
     @SerializedName("front_brake_type") public String frontBrakeType;
@@ -113,6 +114,7 @@ public class Bike implements Serializable {
     public String getFuelTankCapacity() { return fuelTankCapacity != null ? fuelTankCapacity : "N/A"; }
     public String getBrakingSystem() { return brakingSystem != null ? brakingSystem : "N/A"; }
     public String getTopSpeed() { return topSpeed != null ? topSpeed : "N/A"; }
+    public String getInstrumentCluster() { return instrumentCluster != null ? instrumentCluster : "N/A"; }
     
     public String getFrontBrakeType() { return frontBrakeType != null ? frontBrakeType : "Disc"; }
     public String getRearBrakeType() { return rearBrakeType != null ? rearBrakeType : "Drum"; }

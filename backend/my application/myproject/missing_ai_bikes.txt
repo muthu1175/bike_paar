@@ -1,0 +1,81 @@
+Missing from search_bikes (Total 79):
+
+aprilia sr 160
+bajaj avenger 220
+bajaj chetak ev
+bajaj discover 125
+bajaj platina 110
+bajaj pulsar 150
+bajaj pulsar ns200
+bike_name
+bmw ce 04
+bmw g 310 gs
+bullet 500
+bullet 650
+cb500f
+cb500x
+cbr150r
+cbr250r
+cbr500r
+cbr650f
+classic 500 es
+classic 650
+continental gt 650 brg
+ducati panigale v2
+electric re
+fz 25
+harley davidson fat bob
+harley livewire
+hero glamour
+hero impulse
+hero splendor plus
+hero vida v1
+hero xpulse 200 4v
+hero xpulse 200 rally
+himalayan sleet
+honda activa 125
+honda cb200x
+honda cbr650r
+honda crf300l
+honda dream neo
+honda gold wing
+honda hornet 2.0
+honda h’ness cb350
+honda shine 125
+honda sp 125
+honda unicorn
+kawasaki klx 230
+kawasaki ninja 300
+kawasaki ninja 400
+kawasaki ninja e-1
+kawasaki versys 650
+ktm duke 200
+ktm duke 250
+mt-09
+okinawa praise pro
+revolt rv400
+royal enfield classic 350
+royal enfield continental gt 650
+royal enfield himalayan 411
+royal enfield himalayan 450
+royal enfield interceptor 650
+royal enfield meteor 350
+suzuki hayabusa
+suzuki rm-z250
+suzuki v-strom 650
+suzuki v-strom sx
+thunderbird 350x
+thunderbird 500x
+transalp 750
+triumph street twin
+tvs star city plus
+tvs x
+yamaha fz v3
+yamaha mt 15
+yamaha r15 v4
+yamaha r3
+yamaha ray zr
+yamaha saluto
+yamaha tenere 700
+yamaha wr155r
+yzf-r9

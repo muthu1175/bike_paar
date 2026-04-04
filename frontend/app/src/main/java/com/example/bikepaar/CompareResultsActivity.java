@@ -203,7 +203,7 @@ public class CompareResultsActivity extends AppCompatActivity {
                 
                 setText(tvBraking[i], b.getBrakingSystem());
                 setText(tvHeadlights[i], b.getHeadlight());
-                setText(tvConsoles[i], "-"); 
+                setText(tvConsoles[i], b.getInstrumentCluster()); 
                 setText(tvTransmissions[i], b.getTransmission());
 
                 setText(tvKerbWeights[i], b.getKerbWeight());
