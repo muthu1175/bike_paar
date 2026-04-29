@@ -202,16 +202,40 @@ def resolve_bike_image_url(model_name, request=None):
 
     # Global Cache for performance
     global _IMAGE_CACHE
+    media_bikes_path = os.path.join(settings.MEDIA_ROOT, 'bikes')
+
+    def is_placeholder(filename):
+        """Checks if a file is a known placeholder (usually 44421 bytes)."""
+        if filename == "placeholder.png": return True
+        path = os.path.join(media_bikes_path, filename)
+        try:
+            # We check size 44421 which is the specific size of the 'coming soon' AI image
+            return os.path.getsize(path) == 44421
+        except:
+            return False
+    
     if '_IMAGE_CACHE' not in globals() or _IMAGE_CACHE is None:
-         media_bikes_path = os.path.join(settings.MEDIA_ROOT, 'bikes')
          if os.path.exists(media_bikes_path):
              files = os.listdir(media_bikes_path)
-             # Pre-filter
-             _IMAGE_CACHE = {f.replace('\ufeff', '').lower(): f for f in files if not os.path.isdir(os.path.join(media_bikes_path, f))}
+             # Cache stores both full names and squashed names (prefixed with SQ_)
+             cache = {}
+             for f in files:
+                 if os.path.isdir(os.path.join(media_bikes_path, f)): continue
+                 f_lower = f.lower()
+                 cache[f_lower] = f
+                 name_only = os.path.splitext(f_lower)[0]
+                 squashed = re.sub(r'[^a-z0-9]', '', name_only)
+                 if squashed:
+                     sq_key = f"SQ_{squashed}"
+                     # Prioritize NON-placeholder files for the squashed key
+                     if sq_key not in cache or is_placeholder(cache[sq_key]):
+                         cache[sq_key] = f
+             _IMAGE_CACHE = cache
          else:
              _IMAGE_CACHE = {}
     
     available_files_lower = _IMAGE_CACHE
+
 
     # Remove BOM and special chars, lowercase
     raw_name = str(model_name).replace('\ufeff', '').lower().strip()
@@ -219,75 +243,82 @@ def resolve_bike_image_url(model_name, request=None):
     squashed_name = re.sub(r'[^a-z0-9]', '', raw_name)
     
     # Ignore header/metadata items
-    if clean_name in ["model", "commuter bikes", "sports bikes", "scooters", "cruisers", "adventure bikes", "touring bikes", "electric vehicles", "discontinued models"]:
+    if clean_name in ["model", "commuter bikes", "sports bikes", "scooters", "cruisers", "adventure bikes", "touring bikes", "electric vehicles", "discontinued models", "commuter", "street/naked", "sports", "adventure/tourer", "scrambler", "cruiser", "scooter", "commuter/street", "sports/street", "supersports", "streetfighter/naked"]:
         return ""
 
-    # 2. Define search candidates
+    # 1. Try Exact and Squashed Matches first
+    extensions = ['.png', '.webp', '.avif', '.jpg', '.jpeg']
     candidates = [
-        raw_name,                # Exact (lowercased)
-        clean_name,              # Spaces only
-        clean_name.replace(" ", "-"), # Dashes
-        clean_name.replace(" ", "_"), # Underscores
-        squashed_name,           # No spaces/chars
+        squashed_name,
+        clean_name,
+        clean_name.replace(" ", "-"),
+        clean_name.replace(" ", "_"),
     ]
     
-    # Strip first words (usually brand) and add variants
-    parts = clean_name.split()
-    if len(parts) > 1:
-        # Try stripping 1 word (e.g. Honda Activa -> Activa)
-        no_brand1 = " ".join(parts[1:])
-        candidates.append(no_brand1)
-        candidates.append(re.sub(r'[^a-z0-9]', '', no_brand1))
-        
-        # Try stripping 2 words (e.g. Royal Enfield Classic -> Classic)
-        if len(parts) > 2:
-            no_brand2 = " ".join(parts[2:])
-            candidates.append(no_brand2)
-            candidates.append(re.sub(r'[^a-z0-9]', '', no_brand2))
-    
-    # Add more fuzzy candidates (removal of common suffixes)
-    fuzzy_name = re.sub(r'\s(bs[46]|abs|fi|edition|disc|drum|hybrid|connected|pro|plus|gen\s?2|4kwh|special|classic)$', '', clean_name)
-    if fuzzy_name != clean_name:
-        candidates.extend([
-            fuzzy_name,
-            fuzzy_name.replace(" ", "-"),
-            re.sub(r'[^a-z0-9]', '', fuzzy_name)
-        ])
-
-    # Extensions to check (Prioritize premium transparent formats)
-    extensions = ['.png', '.webp', '.avif', '.jpg', '.jpeg']
-        
-    # Priority 1: Strict Squash (Space-insensitive but length-identical equality)
-    # This matches 'Pulsar 150' to 'pulsar150.jpg' or 'r15 m' to 'r15m.png'
-    # without risk of 'r15' matching 'r15m'
-    cand_squashed = re.sub(r'[^a-z0-9]', '', raw_name)
-    if cand_squashed:
-        for ext in extensions:
-            test_file = f"{cand_squashed}{ext}"
-            if test_file in available_files_lower:
-                actual_filename = available_files_lower[test_file]
-                relative_path = f"bikes/{actual_filename}"
-                if request:
-                    return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
-                return settings.MEDIA_URL + relative_path
-
-    # Priority 2: Exact variants (Dashes, Underscores, etc.)
     for cand in candidates:
         if not cand: continue
+        # 1a. Try direct squashed match (handles Hornet 2.0 -> hornet20)
+        sq_key = f"SQ_{re.sub(r'[^a-z0-9]', '', cand)}"
+        if sq_key in available_files_lower:
+            actual_filename = available_files_lower[sq_key]
+            if not is_placeholder(actual_filename):
+                relative_path = f"bikes/{actual_filename}"
+                if request: return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
+                return settings.MEDIA_URL + relative_path
+
+        # 1b. Try with extensions
         for ext in extensions:
             test_file = f"{cand}{ext}"
             if test_file in available_files_lower:
                 actual_filename = available_files_lower[test_file]
-                relative_path = f"bikes/{actual_filename}"
-                if request:
-                    return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
-                return settings.MEDIA_URL + relative_path
+                if not is_placeholder(actual_filename):
+                    relative_path = f"bikes/{actual_filename}"
+                    if request: return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
+                    return settings.MEDIA_URL + relative_path
 
-    # 4. Fallback: return empty
+    # 2. Try stripping brand names
+    parts = clean_name.split()
+    if len(parts) > 1:
+        no_brand_candidates = []
+        if len(parts) > 1: no_brand_candidates.append(" ".join(parts[1:]))
+        if len(parts) > 2: no_brand_candidates.append(" ".join(parts[2:]))
+        
+        for nb_cand in no_brand_candidates:
+            nb_sq_key = f"SQ_{re.sub(r'[^a-z0-9]', '', nb_cand)}"
+            if nb_sq_key in available_files_lower:
+                actual_filename = available_files_lower[nb_sq_key]
+                if not is_placeholder(actual_filename):
+                    relative_path = f"bikes/{actual_filename}"
+                    if request: return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
+                    return settings.MEDIA_URL + relative_path
+
+            for ext in extensions:
+                test_file = f"{nb_cand}{ext}"
+                if test_file in available_files_lower:
+                    actual_filename = available_files_lower[test_file]
+                    if not is_placeholder(actual_filename):
+                        relative_path = f"bikes/{actual_filename}"
+                        if request: return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
+                        return settings.MEDIA_URL + relative_path
+
+    # 3. Fuzzy Match
+    model_words = [w for w in clean_name.split() if len(w) > 1]
+    if len(model_words) >= 1:
+        for file_lower, actual_name in available_files_lower.items():
+            if file_lower.startswith("sq_"): continue # Skip internal cache keys
+            if is_placeholder(actual_name): continue
+            
+            file_clean = re.sub(r'[^a-z0-9]', ' ', file_lower)
+            file_words = set(file_clean.split())
+            
+            if set(model_words).issubset(file_words):
+                 relative_path = f"bikes/{actual_name}"
+                 if request: return request.build_absolute_uri(settings.MEDIA_URL + relative_path)
+                 return settings.MEDIA_URL + relative_path
+
     # 4. Fallback: return placeholder
     placeholder_path = "bikes/placeholder.png"
-    if request:
-        return request.build_absolute_uri(settings.MEDIA_URL + placeholder_path)
+    if request: return request.build_absolute_uri(settings.MEDIA_URL + placeholder_path)
     return settings.MEDIA_URL + placeholder_path
     
 def get_all_columns(df):
@@ -2472,20 +2503,6 @@ class TourerBikesAPIView(APIView):
             )
 
 
-class FeedbackAPIView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        serializer = FeedbackSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                {"message": "Feedback submitted successfully"},
-                status=status.HTTP_201_CREATED
-            )
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

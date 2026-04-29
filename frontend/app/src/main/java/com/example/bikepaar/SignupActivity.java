@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ public class SignupActivity extends AppCompatActivity {
     Button btnCreateAccount;
     TextView tvLogin, tvVerificationStatus;
     ImageView btnBack, imgVerifiedTick;
+    ImageView ivSignupPasswordToggle, ivConfirmPasswordToggle;
     Button btnSendOTP, btnVerifyOTP; // Changed button names
     LinearLayout otpContainer;
     EditText etOTP;
@@ -48,8 +51,32 @@ public class SignupActivity extends AppCompatActivity {
         imgVerifiedTick = findViewById(R.id.imgVerifiedTick);
         tvVerificationStatus = findViewById(R.id.tvVerificationStatus);
         progressBarSignup = findViewById(R.id.progressBarSignup); // Init ProgressBar
+        ivSignupPasswordToggle = findViewById(R.id.ivSignupPasswordToggle);
+        ivConfirmPasswordToggle = findViewById(R.id.ivConfirmPasswordToggle);
 
         ApiService api = ApiClient.getClient().create(ApiService.class);
+
+        ivSignupPasswordToggle.setOnClickListener(v -> {
+            if (etSignupPassword.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                etSignupPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                ivSignupPasswordToggle.setImageResource(R.drawable.ic_visibility);
+            } else {
+                etSignupPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                ivSignupPasswordToggle.setImageResource(R.drawable.ic_visibility_off);
+            }
+            etSignupPassword.setSelection(etSignupPassword.getText().length());
+        });
+
+        ivConfirmPasswordToggle.setOnClickListener(v -> {
+            if (etConfirmPassword.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                etConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                ivConfirmPasswordToggle.setImageResource(R.drawable.ic_visibility);
+            } else {
+                etConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                ivConfirmPasswordToggle.setImageResource(R.drawable.ic_visibility_off);
+            }
+            etConfirmPassword.setSelection(etConfirmPassword.getText().length());
+        });
 
         // SEND OTP Logic... (Unchanged)
         btnSendOTP.setOnClickListener(v -> {
@@ -165,7 +192,13 @@ public class SignupActivity extends AppCompatActivity {
 
                     if (response.isSuccessful()) {
                         Toast.makeText(SignupActivity.this, "Signup successful", Toast.LENGTH_SHORT).show();
-                        finish(); // back to login
+                        
+                        // Pass email back to LoginActivity
+                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                        intent.putExtra("email", etSignupEmail.getText().toString().trim());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        finish();
                     } else {
                         // TRY TO PARSE ERROR BODY
                         String errorMsg = "Signup failed";

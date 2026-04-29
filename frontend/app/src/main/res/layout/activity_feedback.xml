@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="100dp"
                 app:cardElevation="4dp"
-                android:background="#1E3A8A"
+                app:cardBackgroundColor="#1E3A8A"
                 android:layout_marginHorizontal="8dp">
 
                 <LinearLayout
@@ -123,7 +123,6 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:paddingVertical="16dp"
-                    android:clickable="true"
                     android:foreground="?attr/selectableItemBackground">
 
                     <TextView
@@ -132,7 +131,7 @@
                         android:text="Submit Feedback"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/white" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -151,5 +150,12 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

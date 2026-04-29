@@ -16,6 +16,7 @@ public class FeedbackActivity extends AppCompatActivity {
 
     private EditText etFeedback;
     private CardView btnBack, btnSubmitFeedback;
+    private android.widget.ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class FeedbackActivity extends AppCompatActivity {
         etFeedback = findViewById(R.id.etFeedback);
         btnBack = findViewById(R.id.btnBack);
         btnSubmitFeedback = findViewById(R.id.btnSubmitFeedback);
+        progressBar = findViewById(R.id.progressBar);
 
         // Back button click - return to SettingsActivity
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +68,6 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     private void submitFeedbackToServer(String feedback) {
-        // Show loading
-        Toast.makeText(this, "Submitting feedback...", Toast.LENGTH_SHORT).show();
-
         SharedPreferences sp = getSharedPreferences("USER_DATA", MODE_PRIVATE);
         String token = sp.getString("TOKEN", "");
 
@@ -76,6 +75,11 @@ public class FeedbackActivity extends AppCompatActivity {
             Toast.makeText(this, "Please login to submit feedback", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // Show loading
+        progressBar.setVisibility(View.VISIBLE);
+        btnSubmitFeedback.setEnabled(false);
+        Toast.makeText(this, "Submitting your feedback...", Toast.LENGTH_SHORT).show();
 
         ApiService api = ApiClient.getClient().create(ApiService.class);
         
@@ -85,22 +89,35 @@ public class FeedbackActivity extends AppCompatActivity {
         api.addFeedback("Token " + token, body).enqueue(new retrofit2.Callback<Map<String, String>>() {
             @Override
             public void onResponse(retrofit2.Call<Map<String, String>> call, retrofit2.Response<Map<String, String>> response) {
+                // Hide loading
+                progressBar.setVisibility(View.GONE);
+                btnSubmitFeedback.setEnabled(true);
+
                 if (response.isSuccessful()) {
-                    Toast.makeText(FeedbackActivity.this, "Feedback submitted successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FeedbackActivity.this, "Thank you! Your feedback has been saved.", Toast.LENGTH_LONG).show();
                     etFeedback.setText("");
                     
                     // Return to Settings after delay
-                    new android.os.Handler().postDelayed(() -> {
+                    etFeedback.postDelayed(() -> {
                         finish();
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    }, 1500);
+                    }, 2000);
                 } else {
-                    Toast.makeText(FeedbackActivity.this, "Failed to submit feedback", Toast.LENGTH_SHORT).show();
+                    String errorMsg = "Submission failed";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorMsg = response.errorBody().string();
+                        }
+                    } catch (Exception e) {}
+                    Toast.makeText(FeedbackActivity.this, "Error: " + errorMsg, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(retrofit2.Call<Map<String, String>> call, Throwable t) {
+                // Hide loading
+                progressBar.setVisibility(View.GONE);
+                btnSubmitFeedback.setEnabled(true);
                 Toast.makeText(FeedbackActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

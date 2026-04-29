@@ -54,6 +54,13 @@ public class CompareResultsActivity extends AppCompatActivity {
     private TextView[] tvPriceNames = new TextView[3];
     private TextView[] tvPriceValues = new TextView[3];
 
+    // Winner Section
+    private View cardWinner;
+    private ImageView ivWinner;
+    private TextView tvWinnerName;
+    private TextView tvWinnerReason;
+    private int[] categoryWins = new int[3];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,6 +180,12 @@ public class CompareResultsActivity extends AppCompatActivity {
         tvPriceValues[0] = findViewById(R.id.tvPriceValue1);
         tvPriceValues[1] = findViewById(R.id.tvPriceValue2);
         tvPriceValues[2] = findViewById(R.id.tvPriceValue3);
+
+        // Winner Views
+        cardWinner = findViewById(R.id.cardWinner);
+        ivWinner = findViewById(R.id.ivWinner);
+        tvWinnerName = findViewById(R.id.tvWinnerName);
+        tvWinnerReason = findViewById(R.id.tvWinnerReason);
     }
 
     private void populateData() {
@@ -224,6 +237,9 @@ public class CompareResultsActivity extends AppCompatActivity {
         
         // Highlight Best Specs
         highlightBestSpecs();
+
+        // Calculate and Show Winner
+        calculateAndShowWinner();
     }
     
     private void setText(TextView tv, String text) {
@@ -261,9 +277,12 @@ public class CompareResultsActivity extends AppCompatActivity {
     }
 
     private void highlightBestSpecs() {
+        // Reset category wins
+        for (int i = 0; i < 3; i++) categoryWins[i] = 0;
+
         // 1. Price (Lower is Better)
         double[] prices = new double[3];
-        for (int i=0; i<3; i++) prices[i] = (bikes[i] != null) ? bikes[i].price : -1;
+        for (int i=0; i<3; i++) prices[i] = (bikes[i] != null) ? (double)bikes[i].price : -1.0;
         highlightRow(tvPriceValues, prices, true); // Lower is better
         highlightRow(tvPrices, prices, true);      // Also highlight header price
 
@@ -285,8 +304,44 @@ public class CompareResultsActivity extends AppCompatActivity {
         // 7. Fuel Tank (Higher is Better)
         highlightRowString(tvFuelTanks, "fuelTank", false);
 
-        // 8. Kerb Weight (Lower is Better - usually, for agility)
+        // 8. Kerb Weight (Lower is Better)
         highlightRowString(tvKerbWeights, "weight", true);
+    }
+
+    private void calculateAndShowWinner() {
+        if (cardWinner == null) return;
+
+        int winnerIndex = -1;
+        int maxWins = -1;
+
+        for (int i = 0; i < 3; i++) {
+            if (bikes[i] == null) continue;
+            
+            if (categoryWins[i] > maxWins) {
+                maxWins = categoryWins[i];
+                winnerIndex = i;
+            } else if (categoryWins[i] == maxWins && maxWins > 0) {
+                // Tie-breaker: Lower price wins
+                if (bikes[i].price < bikes[winnerIndex].price) {
+                    winnerIndex = i;
+                }
+            }
+        }
+
+        if (winnerIndex != -1 && maxWins > 0) {
+            cardWinner.setVisibility(View.VISIBLE);
+            Bike winner = bikes[winnerIndex];
+            tvWinnerName.setText(winner.name);
+            tvWinnerReason.setText("Winner in " + maxWins + " key categories");
+
+            if (winner.imageUrl != null && !winner.imageUrl.isEmpty()) {
+                Glide.with(this).load(winner.imageUrl).placeholder(R.drawable.sample_bike).into(ivWinner);
+            } else {
+                ivWinner.setImageResource(R.drawable.sample_bike);
+            }
+        } else {
+            cardWinner.setVisibility(View.GONE);
+        }
     }
 
     private void highlightRowString(TextView[] views, String type, boolean lowerIsBetter) {
@@ -334,10 +389,17 @@ public class CompareResultsActivity extends AppCompatActivity {
             
             // Check if this view matches the best value
             if (values[i] >= 0 && Math.abs(values[i] - bestVal) < 0.01) {
-                 views[i].setTextColor(android.graphics.Color.parseColor("#4CAF50")); // Green
+                 views[i].setTextColor(android.graphics.Color.parseColor("#10B981")); // Branded Green
                  views[i].setTypeface(null, android.graphics.Typeface.BOLD);
+                 
+                 // Increment category win for this bike
+                 if (views == tvPriceValues || views == tvDisplacements || views == tvPowers || 
+                     views == tvTorques || views == tvMileages || views == tvTopSpeeds || 
+                     views == tvFuelTanks || views == tvKerbWeights) {
+                     categoryWins[i]++;
+                 }
             } else {
-                 views[i].setTextColor(android.graphics.Color.BLACK); // Default
+                 views[i].setTextColor(android.graphics.Color.parseColor("#111827")); // Default Dark
                  views[i].setTypeface(null, android.graphics.Typeface.NORMAL);
             }
         }
