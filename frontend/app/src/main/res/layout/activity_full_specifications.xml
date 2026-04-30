@@ -319,6 +319,34 @@
 
                     </LinearLayout>
 
+                    <!-- Top Speed -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:gravity="center_vertical"
+                        android:background="?selectableItemBackground">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Top Speed"
+                            android:textColor="#666"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_spec_top_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
+                            android:textColor="#333"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -715,6 +743,34 @@
 
                     </LinearLayout>
 
+                    <!-- Braking System -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:gravity="center_vertical"
+                        android:background="?selectableItemBackground">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Braking System"
+                            android:textColor="#666"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_spec_braking_system"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
+                            android:textColor="#333"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -837,6 +893,34 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12V, 4Ah"
+                            android:textColor="#333"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <!-- Instrument Cluster -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:gravity="center_vertical"
+                        android:background="?selectableItemBackground">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Instrument Cluster"
+                            android:textColor="#666"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_spec_instrument_cluster"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
                             android:textColor="#333"
                             android:textSize="14sp"
                             android:textStyle="bold" />

@@ -36,10 +36,11 @@ public class AiQuestion2Activity extends AppCompatActivity {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 
-        ivBell.setOnClickListener(v ->
-                Toast.makeText(AiQuestion2Activity.this,
-                        "Notifications clicked", Toast.LENGTH_SHORT).show()
-        );
+        ivBell.setOnClickListener(v -> {
+            Intent intent = new Intent(AiQuestion2Activity.this, NotificationActivity.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
 
         btnClose.setOnClickListener(v -> {
             Intent i = new Intent(AiQuestion2Activity.this, HomeActivity.class);

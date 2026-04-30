@@ -43,6 +43,15 @@ public class FavouriteActivity extends AppCompatActivity {
 
         fetchFavorites();
 
+        android.widget.ImageView ivBell = findViewById(R.id.ivBell);
+        if (ivBell != null) {
+            ivBell.setOnClickListener(v -> {
+                Intent intent = new Intent(FavouriteActivity.this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            });
+        }
+
         // Bottom Nav Logic
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_fav);

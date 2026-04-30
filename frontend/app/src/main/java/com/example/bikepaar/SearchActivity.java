@@ -69,8 +69,11 @@ public class SearchActivity extends AppCompatActivity {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 
-        ivBell.setOnClickListener(v ->
-                Toast.makeText(this, "Notifications clicked", Toast.LENGTH_SHORT).show());
+        ivBell.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchActivity.this, NotificationActivity.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
 
         // ---------------- Initialize views for search state ----------------
         bigSearchIcon = findViewById(R.id.bigSearchIcon);

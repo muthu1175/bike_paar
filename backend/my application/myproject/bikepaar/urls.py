@@ -79,8 +79,5 @@ urlpatterns = [
         path('verify-email-otp/', VerifyEmailOTPView.as_view(), name='verify-email-otp'),
         path('bikes/popular/', PopularBikesAPIView.as_view(), name='popular-bikes'),
         path('bikes/recent/', RecentLaunchesAPIView.as_view(), name='recent-bikes'),
+        path('notifications/', NotificationListView.as_view(), name='notifications'),
 ]
-
-
-
-

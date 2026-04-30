@@ -40,8 +40,11 @@ public class AiQuestionActivity extends AppCompatActivity {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 
-        ivBell.setOnClickListener(v ->
-                Toast.makeText(this, "Notifications clicked", Toast.LENGTH_SHORT).show());
+        ivBell.setOnClickListener(v -> {
+            Intent intent = new Intent(AiQuestionActivity.this, NotificationActivity.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
 
         // ------------ CARD VIEWS ----------
         tvStep = findViewById(R.id.tvStep);

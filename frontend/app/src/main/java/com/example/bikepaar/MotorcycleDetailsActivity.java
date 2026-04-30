@@ -129,6 +129,7 @@ public class MotorcycleDetailsActivity extends AppCompatActivity {
                 specsIntent.putExtra("HEADLIGHT", intentData.getStringExtra("HEADLIGHT"));
                 specsIntent.putExtra("TAIL_LIGHT", intentData.getStringExtra("TAIL_LIGHT"));
                 specsIntent.putExtra("BATTERY_CAPACITY", intentData.getStringExtra("BATTERY_CAPACITY"));
+                specsIntent.putExtra("INSTRUMENT_CLUSTER", intentData.getStringExtra("INSTRUMENT_CLUSTER"));
                 
                 // Dimensions
                 specsIntent.putExtra("OVERALL_LENGTH", intentData.getStringExtra("OVERALL_LENGTH"));
@@ -208,6 +209,7 @@ public class MotorcycleDetailsActivity extends AppCompatActivity {
         newIntent.putExtra("HEADLIGHT", b.getHeadlight());
         newIntent.putExtra("TAIL_LIGHT", b.getTailLight());
         newIntent.putExtra("BATTERY_CAPACITY", b.getBatteryCapacity());
+        newIntent.putExtra("INSTRUMENT_CLUSTER", b.getInstrumentCluster());
         newIntent.putExtra("OVERALL_LENGTH", b.getOverallLength());
         newIntent.putExtra("OVERALL_WIDTH", b.getOverallWidth());
         newIntent.putExtra("SEAT_HEIGHT", b.getSeatHeight());

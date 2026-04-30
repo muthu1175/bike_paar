@@ -82,6 +82,15 @@ public class BrandDetailsActivity extends AppCompatActivity implements BikeAdapt
             startActivity(i);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
+
+        View notificationBtn = findViewById(R.id.notificationButton);
+        if (notificationBtn != null) {
+            notificationBtn.setOnClickListener(v -> {
+                Intent intent = new Intent(BrandDetailsActivity.this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            });
+        }
         
         // Hide unused views from old layout just in case, though they should be gone from XML
         // Not needed as XML was updated

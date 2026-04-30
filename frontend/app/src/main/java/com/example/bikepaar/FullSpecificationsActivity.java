@@ -58,6 +58,7 @@ public class FullSpecificationsActivity extends AppCompatActivity {
         }
 
         // --- NEW SPECIFICATIONS ---
+        setSpecText(R.id.tv_spec_top_speed, "TOP_SPEED");
         setSpecText(R.id.tv_spec_power, "MAX_POWER");
         setSpecText(R.id.tv_spec_torque, "MAX_TORQUE");
         setSpecText(R.id.tv_spec_mileage, "MILEAGE");
@@ -66,13 +67,14 @@ public class FullSpecificationsActivity extends AppCompatActivity {
         setSpecText(R.id.tv_spec_fuel_tank, "FUEL_TANK_CAPACITY");
         setSpecText(R.id.tv_spec_front_brake, "FRONT_BRAKE_TYPE");
         setSpecText(R.id.tv_spec_rear_brake, "REAR_BRAKE_TYPE");
+        setSpecText(R.id.tv_spec_braking_system, "BRAKING_SYSTEM");
         setSpecText(R.id.tv_spec_front_suspension, "FRONT_SUSPENSION");
         setSpecText(R.id.tv_spec_rear_suspension, "REAR_SUSPENSION");
         setSpecText(R.id.tv_spec_tyre, "TYRE_TYPE");
         setSpecText(R.id.tv_spec_headlight, "HEADLIGHT");
         setSpecText(R.id.tv_spec_taillight, "TAIL_LIGHT");
-        setSpecText(R.id.tv_spec_taillight, "TAIL_LIGHT");
         setSpecText(R.id.tv_spec_battery, "BATTERY_CAPACITY");
+        setSpecText(R.id.tv_spec_instrument_cluster, "INSTRUMENT_CLUSTER");
 
         // Dimensions
         setSpecText(R.id.tv_spec_length, "OVERALL_LENGTH");

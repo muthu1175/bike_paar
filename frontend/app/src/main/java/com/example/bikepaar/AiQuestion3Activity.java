@@ -65,9 +65,11 @@ public class AiQuestion3Activity extends AppCompatActivity {
             );
         }
         if (ivBell != null) {
-            ivBell.setOnClickListener(v ->
-                    Toast.makeText(AiQuestion3Activity.this, "Notifications clicked", Toast.LENGTH_SHORT).show()
-            );
+            ivBell.setOnClickListener(v -> {
+                Intent intent = new Intent(AiQuestion3Activity.this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            });
         }
         if (btnClose_card != null) {
             btnClose_card.setOnClickListener(v -> {

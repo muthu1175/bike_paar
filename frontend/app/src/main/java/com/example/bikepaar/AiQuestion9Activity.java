@@ -52,8 +52,13 @@ public class AiQuestion9Activity extends AppCompatActivity {
             startActivity(new Intent(AiQuestion9Activity.this, MenuActivity.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
-        if (ivBell != null) ivBell.setOnClickListener(v ->
-                Toast.makeText(AiQuestion9Activity.this, "Notifications clicked", Toast.LENGTH_SHORT).show());
+        if (ivBell != null) {
+            ivBell.setOnClickListener(v -> {
+                Intent intent = new Intent(AiQuestion9Activity.this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            });
+        }
         if (btnClose != null) btnClose.setOnClickListener(v -> {
             Intent i = new Intent(AiQuestion9Activity.this, HomeActivity.class);
             i.putExtra("step", 2);

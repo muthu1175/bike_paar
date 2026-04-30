@@ -2877,3 +2877,14 @@ class RecentLaunchesAPIView(APIView):
              mapped_results.append(entry)
 
         return Response(mapped_results)
+
+from .models import Notification
+from .serializers import NotificationSerializer
+
+class NotificationListView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        notifications = Notification.objects.all().order_by('-created_at')
+        serializer = NotificationSerializer(notifications, many=True)
+        return Response(serializer.data)

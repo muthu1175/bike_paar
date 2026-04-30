@@ -75,7 +75,7 @@ public class ApiClient {
                     .create();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.68.181.87:8000/api/") // 10.156.71.87 //madhesh 10.68.181.87
+                    .baseUrl("http://192.168.95.87:8000/api/")
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }

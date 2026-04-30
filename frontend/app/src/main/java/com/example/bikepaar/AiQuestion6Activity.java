@@ -49,7 +49,13 @@ public class AiQuestion6Activity extends AppCompatActivity {
         ImageView btnClose = findViewById(R.id.btnClose_q6);
 
         if (ivMenu != null) ivMenu.setOnClickListener(v -> startActivity(new Intent(AiQuestion6Activity.this, MenuActivity.class)));
-        if (ivBell != null) ivBell.setOnClickListener(v -> Toast.makeText(this, "Notifications clicked", Toast.LENGTH_SHORT).show());
+        if (ivBell != null) {
+            ivBell.setOnClickListener(v -> {
+                Intent intent = new Intent(AiQuestion6Activity.this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            });
+        }
         if (btnClose != null) btnClose.setOnClickListener(v -> {
             Intent i = new Intent(AiQuestion6Activity.this, HomeActivity.class);
             i.putExtra("step", 2);

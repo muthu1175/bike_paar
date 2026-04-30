@@ -84,8 +84,11 @@ public class ProfileActivity extends AppCompatActivity {
         ivMenu.setOnClickListener(v ->
                 startActivity(new Intent(this, MenuActivity.class)));
 
-        ivBell.setOnClickListener(v ->
-                Toast.makeText(this, "No Notifications", Toast.LENGTH_SHORT).show());
+        ivBell.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, NotificationActivity.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
 
         View.OnClickListener avatarClick = v -> openImagePicker();
         avatarContainer.setOnClickListener(avatarClick);
