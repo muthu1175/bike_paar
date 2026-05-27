@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         String token = sp.getString("TOKEN", "");
         boolean isAdmin = sp.getBoolean("IS_ADMIN", false);
 
-        ApiService api = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService api = ApiClient.getClient().create(ApiService.class);
         api.getAppStatus().enqueue(new retrofit2.Callback<java.util.Map<String, Boolean>>() {
             @Override
             public void onResponse(retrofit2.Call<java.util.Map<String, Boolean>> call, retrofit2.Response<java.util.Map<String, Boolean>> response) {

@@ -129,7 +129,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         androidx.appcompat.widget.SwitchCompat switchMaintenance = findViewById(R.id.switchMaintenance);
         if (switchMaintenance == null) return;
 
-        ApiService api = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService api = ApiClient.getClient().create(ApiService.class);
         
         // Fetch current status
         api.getAppStatus().enqueue(new Callback<Map<String, Boolean>>() {
