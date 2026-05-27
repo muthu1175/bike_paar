@@ -153,6 +153,18 @@ public interface ApiService {
     @GET("bikes/")
     Call<List<SportsBike>> getAllBikes(@Header("Authorization") String token);
 
+    @GET("bikes/")
+    Call<List<Bike>> getAllBikesAdmin(@Header("Authorization") String token);
+
+    @POST("admin/bikes/")
+    Call<Map<String, String>> addBike(@Header("Authorization") String token, @Body Map<String, String> body);
+
+    @retrofit2.http.PUT("admin/bikes/{model_name}/")
+    Call<Map<String, String>> updateBike(@retrofit2.http.Path("model_name") String modelName, @Header("Authorization") String token, @Body Map<String, String> body);
+
+    @retrofit2.http.DELETE("admin/bikes/{model_name}/")
+    Call<Map<String, String>> deleteBike(@retrofit2.http.Path("model_name") String modelName, @Header("Authorization") String token);
+
     @GET("favourites/")
     Call<List<SportsBike>> getFavorites(@Header("Authorization") String token);
 
@@ -184,4 +196,24 @@ public interface ApiService {
 
     @POST("verify-email-otp/")
     Call<Map<String, Object>> verifyEmailOTP(@Body Map<String, String> body);
+
+    @Multipart
+    @POST("admin/notifications/send/")
+    Call<Map<String, String>> sendAdminNotification(
+            @Part("title") okhttp3.RequestBody title,
+            @Part("message") okhttp3.RequestBody message,
+            @Part MultipartBody.Part image
+    );
+
+    @GET("admin/dashboard-stats/")
+    Call<Map<String, Integer>> getAdminDashboardStats();
+
+    @POST("admin/feedback/reply/")
+    Call<Map<String, String>> replyFeedback(@Body Map<String, Object> body);
+
+    @GET("app-status/")
+    Call<Map<String, Boolean>> getAppStatus();
+
+    @POST("admin/toggle-maintenance/")
+    Call<Map<String, Boolean>> toggleMaintenance(@Body Map<String, Boolean> body);
 }

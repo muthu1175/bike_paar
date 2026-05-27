@@ -98,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
                         String userEmail = response.body().get("email");
                         String token = response.body().get("token");
                         String profileImage = response.body().get("profile_image");
+                        String isAdminStr = response.body().get("is_admin");
+                        boolean isAdmin = "true".equalsIgnoreCase(isAdminStr);
 
                         // ✅ SharedPreferences MUST be inside this block
                         SharedPreferences sp =
@@ -112,9 +114,14 @@ public class LoginActivity extends AppCompatActivity {
                                 .putString("email", userEmail)
                                 .putString("profile_image", profileImage) // Save new image
                                 .putBoolean("LOGGED_IN", true)
+                                .putBoolean("IS_ADMIN", isAdmin)
                                 .apply();
 
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        if (isAdmin) {
+                            startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        }
                         finish();
 
                     } else {

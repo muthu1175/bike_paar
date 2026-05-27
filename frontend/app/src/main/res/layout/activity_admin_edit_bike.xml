@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF5F5">
+
+    <!-- Top App Bar -->
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FAF5F5"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_back_arrow"
+            app:tint="#A03020" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Update Bike Details"
+            android:textColor="#A03020"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:text="RESET"
+            android:textColor="#A03020"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:layout_above="@id/bottomBar"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Bike Image Section -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="24dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF">
+
+                    <ImageView
+                        android:id="@+id/ivBikeImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/sample_bike"
+                        android:padding="16dp" />
+
+                    <!-- Change Photo Button Overlay -->
+                    <LinearLayout
+                        android:id="@+id/btnChangePhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/rounded_button"
+                        android:backgroundTint="#80000000"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="8dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="12dp"
+                        android:gravity="center_vertical">
+                        
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_edit"
+                            app:tint="#FFFFFF"
+                            android:layout_marginRight="4dp"/>
+                            
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Change Photo"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Basic Info Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Basic Info"
+                android:textColor="#A03020"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Bike Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bike Name"
+                android:textSize="10sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxStrokeColor="#E0E0E0"
+                app:boxStrokeWidth="1dp"
+                android:layout_marginBottom="16dp"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_edit">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etBikeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KTM Duke 390"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:paddingVertical="12dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Brand -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brand"
+                android:textSize="10sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxStrokeColor="#E0E0E0"
+                app:boxStrokeWidth="1dp"
+                android:layout_marginBottom="16dp"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_arrow_down">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etBrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KTM"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:paddingVertical="12dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Price -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price (₹)"
+                android:textSize="10sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxStrokeColor="#E0E0E0"
+                app:boxStrokeWidth="1dp"
+                android:layout_marginBottom="16dp"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_edit">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3,10,000"
+                    android:inputType="numberDecimal"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:paddingVertical="12dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Status -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textSize="10sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="8dp"/>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
+                
+                <TextView
+                    android:id="@+id/chipActive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/rounded_toggle_selected"
+                    android:backgroundTint="#A03020"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/chipDiscontinued"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Discontinued"
+                    android:textColor="#A03020"
+                    android:textSize="12sp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:background="@drawable/rounded_toggle_selected"
+                    android:backgroundTint="#F6D0C3"/>
+            </LinearLayout>
+
+
+            <!-- Complete Technical Specifications -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Complete Technical\nSpecifications"
+                android:textColor="#A03020"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- PERFORMANCE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⏱️ PERFORMANCE"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="12dp"/>
+
+            <include layout="@layout/include_spec_field" android:id="@+id/fldEngine" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldPower" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldTorque" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldTopSpeed" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldMileage" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldTransmission" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <!-- HARDWARE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚙️ HARDWARE"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"/>
+
+            <include layout="@layout/include_spec_field" android:id="@+id/fldBrakingSystem" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldFrontBrake" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldRearBrake" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldFrontSuspension" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldRearSuspension" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldTyreType" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldInstrumentCluster" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldHeadlight" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldTailLight" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldBatteryCapacity" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <!-- DIMENSIONS -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📏 DIMENSIONS"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"/>
+
+            <include layout="@layout/include_spec_field" android:id="@+id/fldOverallLength" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldOverallWidth" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldWeight" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldFuelTank" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldSeatHeight" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <include layout="@layout/include_spec_field" android:id="@+id/fldClearance" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Action Bar -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnDiscard"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/outlined_button"
+            android:backgroundTint="#FFFFFF"
+            android:text="Discard"
+            android:textColor="#A03020"
+            android:textStyle="bold"
+            app:strokeColor="#A03020"
+            app:strokeWidth="1dp"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="#FF6600"
+            android:text="Update Database"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+</RelativeLayout>

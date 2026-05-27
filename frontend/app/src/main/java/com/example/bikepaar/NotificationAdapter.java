@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
@@ -39,6 +41,24 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             
             String createdAt = notification.getString("created_at");
             holder.tvTime.setText(formatTime(createdAt));
+            
+            if (notification.has("image") && !notification.isNull("image")) {
+                String imageUrl = notification.getString("image");
+                if (!imageUrl.isEmpty()) {
+                    holder.ivNotificationImage.setVisibility(View.VISIBLE);
+                    // Handle relative URL (if Django returns /media/...)
+                    if (!imageUrl.startsWith("http")) {
+                        imageUrl = "http://10.0.2.2:8000" + imageUrl;
+                    }
+                    Glide.with(holder.itemView.getContext())
+                        .load(imageUrl)
+                        .into(holder.ivNotificationImage);
+                } else {
+                    holder.ivNotificationImage.setVisibility(View.GONE);
+                }
+            } else {
+                holder.ivNotificationImage.setVisibility(View.GONE);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -77,12 +97,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     static class NotificationViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvMessage, tvTime;
+        ImageView ivNotificationImage;
 
         public NotificationViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvNotificationTitle);
             tvMessage = itemView.findViewById(R.id.tvNotificationMessage);
             tvTime = itemView.findViewById(R.id.tvNotificationTime);
+            ivNotificationImage = itemView.findViewById(R.id.ivNotificationImage);
         }
     }
 }

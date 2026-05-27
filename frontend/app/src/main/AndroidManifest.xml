@@ -131,10 +131,7 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".NotificationActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".AdventureBikesActivity"
             android:exported="false"
@@ -251,6 +248,56 @@
         </activity>
         <activity
             android:name=".MaintenanceActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdminSendNotificationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdminTrendingBikesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdminUserFeedbacksActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdminPublishNewsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdminManageBikesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdminReviewModerationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdminEditBikeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.BikePaar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminAddBikeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.BikePaar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminSettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait"/>

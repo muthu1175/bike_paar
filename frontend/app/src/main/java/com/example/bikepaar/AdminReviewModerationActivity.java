@@ -3,72 +3,65 @@ package com.example.bikepaar;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import org.json.JSONArray;
+
 import java.io.IOException;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class NotificationActivity extends AppCompatActivity {
+public class AdminReviewModerationActivity extends AppCompatActivity {
 
-    private RecyclerView rvNotifications;
+    private RecyclerView rvBikeReviews;
     private ProgressBar progressBar;
-    private LinearLayout layoutEmpty;
-    private NotificationAdapter adapter;
+    private AdminBikeReviewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+        setContentView(R.layout.activity_admin_review_moderation);
 
         ImageView ivBack = findViewById(R.id.ivBack);
-        ivBack.setOnClickListener(v -> {
-            finish();
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        });
+        ivBack.setOnClickListener(v -> finish());
+        
+        ImageView ivExit = findViewById(R.id.ivExit);
+        ivExit.setOnClickListener(v -> finish());
 
-        rvNotifications = findViewById(R.id.rvNotifications);
+        rvBikeReviews = findViewById(R.id.rvBikeReviews);
         progressBar = findViewById(R.id.progressBar);
-        layoutEmpty = findViewById(R.id.layoutEmpty);
 
-        rvNotifications.setLayoutManager(new LinearLayoutManager(this));
+        rvBikeReviews.setLayoutManager(new LinearLayoutManager(this));
 
-        fetchNotifications();
+        fetchBikeReviews();
     }
 
-    private void fetchNotifications() {
+    private void fetchBikeReviews() {
         progressBar.setVisibility(View.VISIBLE);
-        rvNotifications.setVisibility(View.GONE);
-        layoutEmpty.setVisibility(View.GONE);
-
-        // Fetch using OkHttp
-        android.content.SharedPreferences sp = getSharedPreferences("USER_DATA", MODE_PRIVATE);
-        String token = sp.getString("TOKEN", "");
+        rvBikeReviews.setVisibility(View.GONE);
 
         OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2:8000/api/notifications/";
+        String url = "http://10.0.2.2:8000/api/admin/bike-reviews/";
 
-        Request.Builder requestBuilder = new Request.Builder().url(url);
-        if (!token.isEmpty()) {
-            requestBuilder.addHeader("Authorization", "Token " + token);
-        }
-        Request request = requestBuilder.build();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 runOnUiThread(() -> {
                     progressBar.setVisibility(View.GONE);
-                    layoutEmpty.setVisibility(View.VISIBLE);
-                    Toast.makeText(NotificationActivity.this, "Failed to load notifications", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminReviewModerationActivity.this, "Failed to load reviews", Toast.LENGTH_SHORT).show();
                 });
             }
 
@@ -82,33 +75,27 @@ public class NotificationActivity extends AppCompatActivity {
                         runOnUiThread(() -> {
                             progressBar.setVisibility(View.GONE);
                             if (jsonArray.length() > 0) {
-                                adapter = new NotificationAdapter(jsonArray);
-                                rvNotifications.setAdapter(adapter);
-                                rvNotifications.setVisibility(View.VISIBLE);
+                                adapter = new AdminBikeReviewAdapter(jsonArray);
+                                rvBikeReviews.setAdapter(adapter);
+                                rvBikeReviews.setVisibility(View.VISIBLE);
                             } else {
-                                layoutEmpty.setVisibility(View.VISIBLE);
+                                Toast.makeText(AdminReviewModerationActivity.this, "No reviews found", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } catch (Exception e) {
                         e.printStackTrace();
                         runOnUiThread(() -> {
                             progressBar.setVisibility(View.GONE);
-                            layoutEmpty.setVisibility(View.VISIBLE);
+                            Toast.makeText(AdminReviewModerationActivity.this, "Error parsing reviews", Toast.LENGTH_SHORT).show();
                         });
                     }
                 } else {
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.GONE);
-                        layoutEmpty.setVisibility(View.VISIBLE);
+                        Toast.makeText(AdminReviewModerationActivity.this, "Error fetching reviews", Toast.LENGTH_SHORT).show();
                     });
                 }
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

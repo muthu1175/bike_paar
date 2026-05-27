@@ -47,11 +47,49 @@ public class MainActivity extends AppCompatActivity {
                 getSharedPreferences("USER_DATA", MODE_PRIVATE);
 
         String token = sp.getString("TOKEN", "");
+        boolean isAdmin = sp.getBoolean("IS_ADMIN", false);
 
+        ApiService api = ApiClient.getRetrofitInstance().create(ApiService.class);
+        api.getAppStatus().enqueue(new retrofit2.Callback<java.util.Map<String, Boolean>>() {
+            @Override
+            public void onResponse(retrofit2.Call<java.util.Map<String, Boolean>> call, retrofit2.Response<java.util.Map<String, Boolean>> response) {
+                boolean isMaintenance = false;
+                if (response.isSuccessful() && response.body() != null) {
+                    Boolean maintenanceStatus = response.body().get("maintenance_mode");
+                    if (maintenanceStatus != null) {
+                        isMaintenance = maintenanceStatus;
+                    }
+                }
+
+                if (isMaintenance && !isAdmin) {
+                    // Redirect to Maintenance Activity
+                    Intent i = new Intent(MainActivity.this, MaintenanceActivity.class);
+                    android.os.Bundle options = android.app.ActivityOptions.makeCustomAnimation(MainActivity.this,
+                            android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
+                    startActivity(i, options);
+                    finish();
+                } else {
+                    proceedToNextScreen(token, isAdmin);
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<java.util.Map<String, Boolean>> call, Throwable t) {
+                // If API fails, default to normal flow (or you could default to maintenance, but usually normal is safer)
+                proceedToNextScreen(token, isAdmin);
+            }
+        });
+    }
+
+    private void proceedToNextScreen(String token, boolean isAdmin) {
         Intent i;
         if (token != null && !token.isEmpty()) {
             // ✅ Already logged in
-            i = new Intent(MainActivity.this, HomeActivity.class);
+            if (isAdmin) {
+                i = new Intent(MainActivity.this, AdminDashboardActivity.class);
+            } else {
+                i = new Intent(MainActivity.this, HomeActivity.class);
+            }
         } else {
             // ❌ Not logged in
             i = new Intent(MainActivity.this, LoginActivity.class);

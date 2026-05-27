@@ -104,10 +104,28 @@ class EmailVerification(models.Model):
         return f"{self.email} - {'Verified' if self.is_verified else 'Pending'}"
 
 class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=255)
     message = models.TextField()
+    image = models.ImageField(upload_to='news_images/', null=True, blank=True)
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+class SearchQuery(models.Model):
+    query = models.CharField(max_length=255, unique=True)
+    count = models.IntegerField(default=1)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.query} - {self.count}"
+
+class AppSetting(models.Model):
+    key = models.CharField(max_length=100, unique=True)
+    value = models.CharField(max_length=255)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.key}: {self.value}"

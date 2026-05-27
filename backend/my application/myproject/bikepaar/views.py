@@ -134,7 +134,8 @@ def login(request):
         "token": token.key,
         "username": user.first_name, # Return Display Name instead of internal username
         "email": user.email,
-        "profile_image": image_url
+        "profile_image": image_url,
+        "is_admin": "true" if user.is_superuser else "false"
     })
 
 
@@ -2869,6 +2870,205 @@ class RecentLaunchesAPIView(APIView):
             result_df = result_df.sort_values(by=model_col)
 
         mapped_results = []
+class FeedbackAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        data = request.data.copy()
+        # Use simple string user_id as defined in model, or username
+        data["user_id"] = request.user.username 
+        
+        serializer = FeedbackSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Feedback submitted successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+EXCEL_PATH = os.path.join(settings.BASE_DIR, "bikepaar", "search_bikes.xlsx")
+
+def bike_details(request):
+    model = request.GET.get("model")
+
+    if not model:
+        return JsonResponse({"error": "model query param required"}, status=400)
+
+    df = pd.read_excel(EXCEL_PATH,header=1)
+
+    # column names clean
+    df.columns = df.columns.str.strip().str.lower()
+
+    for _, row in df.iterrows():   # ✅ row defined HERE
+        if row["model"].strip().lower() == model.strip().lower():
+
+            image_path = row.get("image")  # ✅ NOW VALID
+
+            image_url = (
+                request.build_absolute_uri(settings.MEDIA_URL + image_path)
+                if pd.notna(image_path) else None
+            )
+
+            return JsonResponse({
+                "model": row["model"],
+                "brand": row["brand"],
+                "price": row["price (₹)"],
+                "displacement": row["displacement"],
+                "max_power": row["max power"],
+                "max_torque": row["max torque"],
+                "transmission": row["transmission"],
+                "mileage": row["mileage"],
+                "kerb_weight": row["kerb weight"],
+                "fuel_tank": row["fuel tank"],
+                "image_url": image_url
+            })
+
+    return JsonResponse({"error": "Bike not found"}, status=404)
+
+
+# -------------------------------------------------------------------------
+# EMAIL OTP VERIFICATION VIEWS
+# -------------------------------------------------------------------------
+
+class SendEmailOTPView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email')
+        if not email:
+            return Response({"error": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Generate 6-digit OTP
+        otp = str(random.randint(100000, 999999))
+
+        # Save to DB
+        EmailOTP.objects.update_or_create(
+            email=email,
+            defaults={'otp': otp}
+        )
+
+        # Send Email
+        subject = "Your BikePaar Verification Code"
+        message = f"Your verification code is: {otp}"
+        
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+                fail_silently=False,
+            )
+            return Response({"message": "OTP sent successfully"})
+        except Exception as e:
+            return Response({"error": f"Failed to send email: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class VerifyEmailOTPView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email')
+        otp = request.data.get('otp')
+
+        if not email or not otp:
+            return Response({"error": "Email and OTP are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Check OTP
+            otp_entry = EmailOTP.objects.get(email=email, otp=otp)
+            
+            # OTP Correct: Verification Successful
+            
+            # 1. Update Profile (if user exists - e.g. password reset or late verification)
+            if User.objects.filter(email=email).exists():
+                user = User.objects.get(email=email)
+                profile, created = Profile.objects.get_or_create(user=user)
+                profile.is_email_verified = True
+                profile.save()
+
+            # 2. Mark OTP as verified (IMPORTANT for Signup)
+            otp_entry.is_verified = True
+            otp_entry.save()
+            # Do NOT delete otp_entry yet. We need it for signup check.
+
+            return Response({"message": "Email verified successfully", "verified": True})
+
+        except EmailOTP.DoesNotExist:
+            return Response({"error": "Invalid OTP"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PopularBikesAPIView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        from .models import SearchQuery
+        top_searches = SearchQuery.objects.order_by('-count')[:10].values_list('query', flat=True)
+        popular_terms = list(top_searches)
+        
+        if not popular_terms:
+            popular_terms = ["r15", "classic 350", "duke 390", "pulsar", "apache", "splendor", "mt 15", "bullet", "himalayan", "hunter"]
+            
+        df = pd.read_excel(EXCEL_PATH, header=1)
+        df.columns = df.columns.astype(str).str.lower().str.strip()
+        df = df.replace({np.nan: ""})
+        cols = get_all_columns(df)
+        model_col = cols['model']
+        
+        user_favs = set()
+        if request.user.is_authenticated:
+             user_favs = set(FavouriteBike.objects.filter(user=request.user).values_list('model', flat=True))
+
+        if not model_col:
+             return Response({"error": "Model column not found"}, status=500)
+
+        mask = df[model_col].astype(str).str.lower().apply(lambda x: any(term in x for term in popular_terms))
+        result_df = df[mask]
+        result_df = result_df.head(15)
+
+        mapped_results = []
+        for _, row in result_df.iterrows():
+             price_val = parse_price(row.get(cols['price'], 0))
+             if price_val <= 0: continue
+             mapped_results.append(build_bike_entry(row, cols, user_favs, request))
+
+        return Response(mapped_results)
+
+
+class RecentLaunchesAPIView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        recent_bikes_by_brand = {
+            "Royal Enfield": ["himalayan 450", "shotgun 650", "guerrilla 450", "bear 650"],
+            "KTM": ["duke 390", "duke 250"],
+            "TVS": ["apache rtr 310", "x", "ronin"],
+            "Bajaj": ["pulsar ns400z", "freedom 125"],
+            "Hero": ["mavrick 440", "karizma xmr"],
+            "Honda": ["nx500", "cb350"],
+            "Yamaha": ["r3", "mt-03"]
+        }
+        all_recent_names = [bike for bikes in recent_bikes_by_brand.values() for bike in bikes]
+        
+        df = pd.read_excel(EXCEL_PATH, header=1)
+        df.columns = df.columns.astype(str).str.lower().str.strip()
+        df = df.replace({np.nan: ""})
+        cols = get_all_columns(df)
+        model_col = cols['model']
+        brand_col = cols.get('brand')
+        
+        user_favs = set()
+        if request.user.is_authenticated:
+             user_favs = set(FavouriteBike.objects.filter(user=request.user).values_list('model', flat=True))
+
+        if not model_col:
+             return Response({"error": "Model column not found"}, status=500)
+
+        mask = df[model_col].astype(str).str.lower().apply(lambda x: any(term in x for term in all_recent_names))
+        result_df = df[mask]
+        
+        if brand_col:
+            result_df = result_df.sort_values(by=brand_col)
+        else:
+            result_df = result_df.sort_values(by=model_col)
+
+        mapped_results = []
         for _, row in result_df.iterrows():
              price_val = parse_price(row.get(cols['price'], 0))
              if price_val <= 0: continue
@@ -2885,6 +3085,203 @@ class NotificationListView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        notifications = Notification.objects.all().order_by('-created_at')
+        from django.db.models import Q
+        if request.user.is_authenticated:
+            notifications = Notification.objects.filter(Q(user__isnull=True) | Q(user=request.user)).order_by('-created_at')
+        else:
+            notifications = Notification.objects.filter(user__isnull=True).order_by('-created_at')
         serializer = NotificationSerializer(notifications, many=True)
         return Response(serializer.data)
+
+class AdminReplyFeedbackAPIView(APIView):
+    permission_classes = [AllowAny] # In production, restrict to Admin only
+
+    def post(self, request):
+        user_id = request.data.get('user_id')
+        reply_message = request.data.get('reply_message')
+
+        if not user_id or not reply_message:
+            return Response({"error": "user_id and reply_message are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(id=user_id)
+            notification = Notification.objects.create(
+                user=user,
+                title="Admin Reply",
+                message=reply_message
+            )
+            serializer = NotificationSerializer(notification)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+class AdminSendNotificationAPIView(APIView):
+    permission_classes = [AllowAny] # In production, restrict to IsAuthenticated/Admin only
+
+    def post(self, request):
+        title = request.data.get('title')
+        message = request.data.get('message')
+        image = request.FILES.get('image')
+
+        if not title or not message:
+            return Response({"error": "Title and Message are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Save to database
+        notification = Notification.objects.create(
+            title=title,
+            message=message,
+            image=image
+        )
+        
+        serializer = NotificationSerializer(notification)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class AdminDashboardStatsAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        try:
+            total_users = User.objects.filter(is_superuser=False).count()
+        except Exception:
+            total_users = 0
+
+        try:
+            total_bikes = 0
+            if os.path.exists(EXCEL_PATH):
+                df = pd.read_excel(EXCEL_PATH)
+                total_bikes = len(df)
+        except Exception:
+            total_bikes = 0
+
+        try:
+            new_feedbacks = Feedback.objects.count()
+        except Exception:
+            new_feedbacks = 0
+
+        active_news = 5 # Placeholder for now
+
+        return Response({
+            "total_users": total_users,
+            "total_bikes": total_bikes,
+            "new_feedbacks": new_feedbacks,
+            "active_news": active_news
+        }, status=status.HTTP_200_OK)
+
+import openpyxl
+
+class AdminBikeReviewAPIView(APIView):
+    permission_classes = [AllowAny] # In production, restrict to Admin only
+
+    def get(self, request):
+        reviews = BikeReview.objects.all().order_by('-created_at')
+        serializer = BikeReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+class AdminBikeAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def _get_column_map(self, sheet):
+        col_map = {}
+        for col in range(1, sheet.max_column + 1):
+            val = sheet.cell(row=2, column=col).value
+            if val:
+                col_map[str(val).strip().lower()] = col
+        return col_map
+
+    def post(self, request):
+        try:
+            wb = openpyxl.load_workbook(EXCEL_PATH)
+            sheet = wb.active
+            col_map = self._get_column_map(sheet)
+            
+            new_row = sheet.max_row + 1
+            for key, value in request.data.items():
+                col_index = col_map.get(key.lower())
+                if col_index:
+                    sheet.cell(row=new_row, column=col_index).value = str(value)
+            
+            wb.save(EXCEL_PATH)
+            return Response({"message": "Bike added successfully"}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request, model_name=None):
+        if not model_name:
+            return Response({"error": "model_name required"}, status=400)
+        try:
+            wb = openpyxl.load_workbook(EXCEL_PATH)
+            sheet = wb.active
+            col_map = self._get_column_map(sheet)
+            model_col = col_map.get('model')
+            if not model_col:
+                return Response({"error": "Model column not found in Excel"}, status=500)
+            
+            target_row = None
+            for r in range(3, sheet.max_row + 1):
+                val = sheet.cell(row=r, column=model_col).value
+                if val and str(val).strip().lower() == model_name.strip().lower():
+                    target_row = r
+                    break
+                    
+            if not target_row:
+                return Response({"error": "Bike not found"}, status=404)
+                
+            for key, value in request.data.items():
+                col_index = col_map.get(key.lower())
+                if col_index:
+                    sheet.cell(row=target_row, column=col_index).value = str(value)
+                    
+            wb.save(EXCEL_PATH)
+            return Response({"message": "Bike updated successfully"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, model_name=None):
+        if not model_name:
+            return Response({"error": "model_name required"}, status=400)
+        try:
+            wb = openpyxl.load_workbook(EXCEL_PATH)
+            sheet = wb.active
+            col_map = self._get_column_map(sheet)
+            model_col = col_map.get('model')
+            if not model_col:
+                return Response({"error": "Model column not found in Excel"}, status=500)
+            
+            target_row = None
+            for r in range(3, sheet.max_row + 1):
+                val = sheet.cell(row=r, column=model_col).value
+                if val and str(val).strip().lower() == model_name.strip().lower():
+                    target_row = r
+                    break
+                    
+            if not target_row:
+                return Response({"error": "Bike not found"}, status=404)
+                
+            sheet.delete_rows(target_row, 1)
+            wb.save(EXCEL_PATH)
+            return Response({"message": "Bike deleted successfully"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+from .models import AppSetting
+
+class MaintenanceStatusAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        setting, _ = AppSetting.objects.get_or_create(key="maintenance_mode", defaults={"value": "false"})
+        is_maintenance = setting.value.lower() == "true"
+        return Response({"maintenance_mode": is_maintenance}, status=status.HTTP_200_OK)
+
+class MaintenanceToggleAPIView(APIView):
+    permission_classes = [AllowAny] # In production, restrict to Admin only
+
+    def post(self, request):
+        # Allow either string "true"/"false" or boolean True/False
+        val = request.data.get("maintenance_mode", False)
+        is_maintenance = str(val).lower() == "true"
+        
+        setting, _ = AppSetting.objects.get_or_create(key="maintenance_mode", defaults={"value": "false"})
+        setting.value = "true" if is_maintenance else "false"
+        setting.save()
+        return Response({"maintenance_mode": setting.value.lower() == "true"}, status=status.HTTP_200_OK)

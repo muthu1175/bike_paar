@@ -145,11 +145,13 @@ from .models import AppReview
 
 class AppReviewSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source="user.username", read_only=True)
+    user_id = serializers.IntegerField(source="user.id", read_only=True)
 
     class Meta:
         model = AppReview
         fields = [
             "id",
+            "user_id",
             "user_name",
             "rating",
             "review",
