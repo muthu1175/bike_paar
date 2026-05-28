@@ -49,52 +49,36 @@ public class AdminReviewModerationActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         rvBikeReviews.setVisibility(View.GONE);
 
-        OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2:8000/api/admin/bike-reviews/";
+        android.content.SharedPreferences sp = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+        String rawToken = sp.getString("TOKEN", "");
+        String token = rawToken.isEmpty() ? null : "Token " + rawToken;
 
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        ApiService api = ApiClient.getClient().create(ApiService.class);
+        api.getAdminBikeReviews(token).enqueue(new retrofit2.Callback<java.util.List<java.util.Map<String, Object>>>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(() -> {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(AdminReviewModerationActivity.this, "Failed to load reviews", Toast.LENGTH_SHORT).show();
-                });
+            public void onResponse(retrofit2.Call<java.util.List<java.util.Map<String, Object>>> call, retrofit2.Response<java.util.List<java.util.Map<String, Object>>> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    try {
+                        String jsonString = new com.google.gson.Gson().toJson(response.body());
+                        JSONArray jsonArray = new JSONArray(jsonString);
+                        
+                        adapter = new AdminBikeReviewAdapter(jsonArray);
+                        rvBikeReviews.setAdapter(adapter);
+                        rvBikeReviews.setVisibility(View.VISIBLE);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(AdminReviewModerationActivity.this, "Error parsing reviews", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(AdminReviewModerationActivity.this, "No reviews found or error", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        String responseData = response.body().string();
-                        JSONArray jsonArray = new JSONArray(responseData);
-                        
-                        runOnUiThread(() -> {
-                            progressBar.setVisibility(View.GONE);
-                            if (jsonArray.length() > 0) {
-                                adapter = new AdminBikeReviewAdapter(jsonArray);
-                                rvBikeReviews.setAdapter(adapter);
-                                rvBikeReviews.setVisibility(View.VISIBLE);
-                            } else {
-                                Toast.makeText(AdminReviewModerationActivity.this, "No reviews found", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        runOnUiThread(() -> {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(AdminReviewModerationActivity.this, "Error parsing reviews", Toast.LENGTH_SHORT).show();
-                        });
-                    }
-                } else {
-                    runOnUiThread(() -> {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(AdminReviewModerationActivity.this, "Error fetching reviews", Toast.LENGTH_SHORT).show();
-                    });
-                }
+            public void onFailure(retrofit2.Call<java.util.List<java.util.Map<String, Object>>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(AdminReviewModerationActivity.this, "Failed to load reviews: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

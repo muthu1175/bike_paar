@@ -87,51 +87,32 @@ public class AdminUserFeedbacksActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         rvFeedbacks.setVisibility(View.GONE);
 
-        // Fetch using OkHttp
-        OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2:8000/api/app-reviews/";
-
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        ApiService api = ApiClient.getClient().create(ApiService.class);
+        api.getAppReviews().enqueue(new retrofit2.Callback<java.util.List<java.util.Map<String, Object>>>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(() -> {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(AdminUserFeedbacksActivity.this, "Failed to load reviews", Toast.LENGTH_SHORT).show();
-                });
+            public void onResponse(retrofit2.Call<java.util.List<java.util.Map<String, Object>>> call, retrofit2.Response<java.util.List<java.util.Map<String, Object>>> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    try {
+                        String jsonString = new com.google.gson.Gson().toJson(response.body());
+                        JSONArray jsonArray = new JSONArray(jsonString);
+                        
+                        adapter = new AdminAppReviewAdapter(jsonArray, review -> showReplyDialog(review));
+                        rvFeedbacks.setAdapter(adapter);
+                        rvFeedbacks.setVisibility(View.VISIBLE);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(AdminUserFeedbacksActivity.this, "Error parsing feedbacks", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(AdminUserFeedbacksActivity.this, "No feedbacks yet or error", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        String responseData = response.body().string();
-                        JSONArray jsonArray = new JSONArray(responseData);
-                        
-                        runOnUiThread(() -> {
-                            progressBar.setVisibility(View.GONE);
-                            if (jsonArray.length() > 0) {
-                                adapter = new AdminAppReviewAdapter(jsonArray, review -> showReplyDialog(review));
-                                rvFeedbacks.setAdapter(adapter);
-                                rvFeedbacks.setVisibility(View.VISIBLE);
-                            } else {
-                                Toast.makeText(AdminUserFeedbacksActivity.this, "No feedbacks yet", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        runOnUiThread(() -> {
-                            progressBar.setVisibility(View.GONE);
-                        });
-                    }
-                } else {
-                    runOnUiThread(() -> {
-                        progressBar.setVisibility(View.GONE);
-                    });
-                }
+            public void onFailure(retrofit2.Call<java.util.List<java.util.Map<String, Object>>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(AdminUserFeedbacksActivity.this, "Failed to load feedbacks: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

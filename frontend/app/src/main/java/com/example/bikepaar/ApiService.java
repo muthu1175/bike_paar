@@ -219,4 +219,7 @@ public interface ApiService {
 
     @GET("notifications/")
     Call<List<Map<String, Object>>> getNotifications(@Header("Authorization") String token);
+
+    @GET("admin/bike-reviews/")
+    Call<List<Map<String, Object>>> getAdminBikeReviews(@Header("Authorization") String token);
 }
