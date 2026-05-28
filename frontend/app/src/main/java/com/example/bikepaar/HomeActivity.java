@@ -50,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
         ImageView ivMenu = findViewById(R.id.ivMenu);
         ImageView ivBell = findViewById(R.id.ivBell);
 
+        View bellContainer = findViewById(R.id.bellContainer);
+
         ivMenu.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, MenuActivity.class);
             Bundle options = android.app.ActivityOptions.makeCustomAnimation(HomeActivity.this,
@@ -57,11 +59,17 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(i, options);
         });
 
-        ivBell.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, NotificationActivity.class);
-            startActivity(intent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        });
+        if (bellContainer != null) {
+            bellContainer.setOnClickListener(v -> {
+                View redDot = findViewById(R.id.redDot);
+                if (redDot != null) {
+                    redDot.setVisibility(View.GONE);
+                }
+                Intent intent = new Intent(HomeActivity.this, NotificationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            });
+        }
 
         // views
         searchPill = findViewById(R.id.searchPill);
@@ -453,6 +461,46 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         sliderHandler.postDelayed(sliderRunnable, 3000);
+        checkUnreadNotifications();
+    }
+
+    private void checkUnreadNotifications() {
+        android.content.SharedPreferences prefs = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+        String rawToken = prefs.getString("TOKEN", "");
+        String token = rawToken.isEmpty() ? null : "Token " + rawToken;
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getNotifications(token).enqueue(new retrofit2.Callback<java.util.List<java.util.Map<String, Object>>>() {
+            @Override
+            public void onResponse(retrofit2.Call<java.util.List<java.util.Map<String, Object>>> call, retrofit2.Response<java.util.List<java.util.Map<String, Object>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    java.util.List<java.util.Map<String, Object>> notifications = response.body();
+                    if (!notifications.isEmpty()) {
+                        try {
+                            double latestIdD = (Double) notifications.get(0).get("id");
+                            int latestId = (int) latestIdD;
+                            int lastSeenId = prefs.getInt("LAST_SEEN_NOTIFICATION_ID", 0);
+                            
+                            View redDot = findViewById(R.id.redDot);
+                            if (redDot != null) {
+                                if (latestId > lastSeenId) {
+                                    redDot.setVisibility(View.VISIBLE);
+                                } else {
+                                    redDot.setVisibility(View.GONE);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<java.util.List<java.util.Map<String, Object>>> call, Throwable t) {
+                // Ignore failure
+            }
+        });
     }
 
     @Override

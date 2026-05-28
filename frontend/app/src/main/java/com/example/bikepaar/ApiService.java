@@ -216,4 +216,7 @@ public interface ApiService {
 
     @POST("admin/toggle-maintenance/")
     Call<Map<String, Boolean>> toggleMaintenance(@Body Map<String, Boolean> body);
+
+    @GET("notifications/")
+    Call<List<Map<String, Object>>> getNotifications(@Header("Authorization") String token);
 }

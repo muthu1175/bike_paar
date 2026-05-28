@@ -48,7 +48,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     holder.ivNotificationImage.setVisibility(View.VISIBLE);
                     // Handle relative URL (if Django returns /media/...)
                     if (!imageUrl.startsWith("http")) {
-                        imageUrl = "http://10.0.2.2:8000" + imageUrl;
+                        imageUrl = "http://10.44.111.87:8000" + imageUrl;
                     }
                     Glide.with(holder.itemView.getContext())
                         .load(imageUrl)

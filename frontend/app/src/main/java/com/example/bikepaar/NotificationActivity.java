@@ -49,59 +49,43 @@ public class NotificationActivity extends AppCompatActivity {
         rvNotifications.setVisibility(View.GONE);
         layoutEmpty.setVisibility(View.GONE);
 
-        // Fetch using OkHttp
         android.content.SharedPreferences sp = getSharedPreferences("USER_DATA", MODE_PRIVATE);
-        String token = sp.getString("TOKEN", "");
+        String rawToken = sp.getString("TOKEN", "");
+        String token = rawToken.isEmpty() ? null : "Token " + rawToken;
 
-        OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2:8000/api/notifications/";
-
-        Request.Builder requestBuilder = new Request.Builder().url(url);
-        if (!token.isEmpty()) {
-            requestBuilder.addHeader("Authorization", "Token " + token);
-        }
-        Request request = requestBuilder.build();
-
-        client.newCall(request).enqueue(new Callback() {
+        ApiService api = ApiClient.getClient().create(ApiService.class);
+        api.getNotifications(token).enqueue(new retrofit2.Callback<java.util.List<java.util.Map<String, Object>>>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(() -> {
-                    progressBar.setVisibility(View.GONE);
+            public void onResponse(retrofit2.Call<java.util.List<java.util.Map<String, Object>>> call, retrofit2.Response<java.util.List<java.util.Map<String, Object>>> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                    try {
+                        String jsonString = new com.google.gson.Gson().toJson(response.body());
+                        JSONArray jsonArray = new JSONArray(jsonString);
+                        
+                        try {
+                            double idD = (Double) response.body().get(0).get("id");
+                            int latestId = (int) idD;
+                            sp.edit().putInt("LAST_SEEN_NOTIFICATION_ID", latestId).apply();
+                        } catch (Exception ignored) {}
+                        
+                        adapter = new NotificationAdapter(jsonArray);
+                        rvNotifications.setAdapter(adapter);
+                        rvNotifications.setVisibility(View.VISIBLE);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        layoutEmpty.setVisibility(View.VISIBLE);
+                    }
+                } else {
                     layoutEmpty.setVisibility(View.VISIBLE);
-                    Toast.makeText(NotificationActivity.this, "Failed to load notifications", Toast.LENGTH_SHORT).show();
-                });
+                }
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        String responseData = response.body().string();
-                        JSONArray jsonArray = new JSONArray(responseData);
-                        
-                        runOnUiThread(() -> {
-                            progressBar.setVisibility(View.GONE);
-                            if (jsonArray.length() > 0) {
-                                adapter = new NotificationAdapter(jsonArray);
-                                rvNotifications.setAdapter(adapter);
-                                rvNotifications.setVisibility(View.VISIBLE);
-                            } else {
-                                layoutEmpty.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        runOnUiThread(() -> {
-                            progressBar.setVisibility(View.GONE);
-                            layoutEmpty.setVisibility(View.VISIBLE);
-                        });
-                    }
-                } else {
-                    runOnUiThread(() -> {
-                        progressBar.setVisibility(View.GONE);
-                        layoutEmpty.setVisibility(View.VISIBLE);
-                    });
-                }
+            public void onFailure(retrofit2.Call<java.util.List<java.util.Map<String, Object>>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                layoutEmpty.setVisibility(View.VISIBLE);
+                Toast.makeText(NotificationActivity.this, "Failed to load notifications: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
