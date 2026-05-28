@@ -3177,6 +3177,17 @@ class AdminBikeReviewAPIView(APIView):
         serializer = BikeReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
+class AdminBikeReviewDetailAPIView(APIView):
+    permission_classes = [AllowAny] # In production, restrict to Admin only
+
+    def delete(self, request, pk):
+        try:
+            review = BikeReview.objects.get(pk=pk)
+            review.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except BikeReview.DoesNotExist:
+            return Response({"error": "Review not found"}, status=status.HTTP_404_NOT_FOUND)
+
 class AdminBikeAPIView(APIView):
     permission_classes = [AllowAny]
 

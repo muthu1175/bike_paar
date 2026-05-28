@@ -12,10 +12,16 @@ import org.json.JSONObject;
 
 public class AdminBikeReviewAdapter extends RecyclerView.Adapter<AdminBikeReviewAdapter.ReviewViewHolder> {
 
-    private JSONArray reviews;
+    public interface OnReviewDeleteListener {
+        void onDeleteClick(int reviewId, int position);
+    }
 
-    public AdminBikeReviewAdapter(JSONArray reviews) {
+    private JSONArray reviews;
+    private OnReviewDeleteListener deleteListener;
+
+    public AdminBikeReviewAdapter(JSONArray reviews, OnReviewDeleteListener deleteListener) {
         this.reviews = reviews;
+        this.deleteListener = deleteListener;
     }
 
     @NonNull
@@ -30,6 +36,7 @@ public class AdminBikeReviewAdapter extends RecyclerView.Adapter<AdminBikeReview
         try {
             JSONObject review = reviews.getJSONObject(position);
             
+            int reviewId = review.optInt("id", -1);
             String userName = review.optString("user", "Unknown User");
             String bikeModel = review.optString("bike_id", "Unknown Bike");
             int rating = review.optInt("rating", 0);
@@ -47,6 +54,12 @@ public class AdminBikeReviewAdapter extends RecyclerView.Adapter<AdminBikeReview
                 holder.tvDate.setText(date);
             }
 
+            holder.ivDelete.setOnClickListener(v -> {
+                if (deleteListener != null && reviewId != -1) {
+                    deleteListener.onDeleteClick(reviewId, position);
+                }
+            });
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -57,8 +70,25 @@ public class AdminBikeReviewAdapter extends RecyclerView.Adapter<AdminBikeReview
         return reviews.length();
     }
 
+    public void removeReview(int position) {
+        JSONArray newArray = new JSONArray();
+        for (int i = 0; i < reviews.length(); i++) {
+            if (i != position) {
+                try {
+                    newArray.put(reviews.getJSONObject(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        this.reviews = newArray;
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, reviews.length());
+    }
+
     static class ReviewViewHolder extends RecyclerView.ViewHolder {
         TextView tvUserName, tvDate, tvBikeModel, tvRating, tvReview;
+        android.widget.ImageView ivDelete;
 
         public ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +97,7 @@ public class AdminBikeReviewAdapter extends RecyclerView.Adapter<AdminBikeReview
             tvBikeModel = itemView.findViewById(R.id.tvBikeModel);
             tvRating = itemView.findViewById(R.id.tvRating);
             tvReview = itemView.findViewById(R.id.tvReview);
+            ivDelete = itemView.findViewById(R.id.ivDelete);
         }
     }
 }

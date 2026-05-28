@@ -11,6 +11,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.Part;
 import java.util.List;
 import retrofit2.http.Query;
+import retrofit2.http.DELETE;
+import retrofit2.http.Path;
 
 
 
@@ -209,7 +211,7 @@ public interface ApiService {
     Call<Map<String, Integer>> getAdminDashboardStats();
 
     @POST("admin/feedback/reply/")
-    Call<Map<String, String>> replyFeedback(@Body Map<String, Object> body);
+    Call<Object> replyFeedback(@Body Map<String, Object> body);
 
     @GET("app-status/")
     Call<Map<String, Boolean>> getAppStatus();
@@ -222,4 +224,7 @@ public interface ApiService {
 
     @GET("admin/bike-reviews/")
     Call<List<Map<String, Object>>> getAdminBikeReviews(@Header("Authorization") String token);
+
+    @DELETE("admin/bike-reviews/{id}/")
+    Call<Void> deleteAdminBikeReview(@Path("id") int id, @Header("Authorization") String token);
 }

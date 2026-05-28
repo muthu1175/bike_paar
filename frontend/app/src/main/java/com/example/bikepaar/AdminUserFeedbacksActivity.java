@@ -151,9 +151,9 @@ public class AdminUserFeedbacksActivity extends AppCompatActivity {
         payload.put("reply_message", replyMessage);
 
         ApiService api = ApiClient.getClient().create(ApiService.class);
-        api.replyFeedback(payload).enqueue(new retrofit2.Callback<Map<String, String>>() {
+        api.replyFeedback(payload).enqueue(new retrofit2.Callback<Object>() {
             @Override
-            public void onResponse(retrofit2.Call<Map<String, String>> call, retrofit2.Response<Map<String, String>> response) {
+            public void onResponse(retrofit2.Call<Object> call, retrofit2.Response<Object> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(AdminUserFeedbacksActivity.this, "Reply sent successfully!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -162,8 +162,8 @@ public class AdminUserFeedbacksActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<Map<String, String>> call, Throwable t) {
-                Toast.makeText(AdminUserFeedbacksActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+            public void onFailure(retrofit2.Call<Object> call, Throwable t) {
+                Toast.makeText(AdminUserFeedbacksActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -63,7 +63,7 @@ public class AdminReviewModerationActivity extends AppCompatActivity {
                         String jsonString = new com.google.gson.Gson().toJson(response.body());
                         JSONArray jsonArray = new JSONArray(jsonString);
                         
-                        adapter = new AdminBikeReviewAdapter(jsonArray);
+                        adapter = new AdminBikeReviewAdapter(jsonArray, (reviewId, position) -> deleteReview(reviewId, position));
                         rvBikeReviews.setAdapter(adapter);
                         rvBikeReviews.setVisibility(View.VISIBLE);
                     } catch (Exception e) {
@@ -81,5 +81,42 @@ public class AdminReviewModerationActivity extends AppCompatActivity {
                 Toast.makeText(AdminReviewModerationActivity.this, "Failed to load reviews: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void deleteReview(int reviewId, int position) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle("Delete Review");
+        builder.setMessage("Are you sure you want to delete this review?");
+        builder.setPositiveButton("Delete", (dialog, which) -> {
+            progressBar.setVisibility(View.VISIBLE);
+            
+            android.content.SharedPreferences sp = getSharedPreferences("USER_DATA", MODE_PRIVATE);
+            String rawToken = sp.getString("TOKEN", "");
+            String token = rawToken.isEmpty() ? null : "Token " + rawToken;
+
+            ApiService api = ApiClient.getClient().create(ApiService.class);
+            api.deleteAdminBikeReview(reviewId, token).enqueue(new retrofit2.Callback<Void>() {
+                @Override
+                public void onResponse(retrofit2.Call<Void> call, retrofit2.Response<Void> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        Toast.makeText(AdminReviewModerationActivity.this, "Review deleted", Toast.LENGTH_SHORT).show();
+                        if (adapter != null) {
+                            adapter.removeReview(position);
+                        }
+                    } else {
+                        Toast.makeText(AdminReviewModerationActivity.this, "Failed to delete review", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(retrofit2.Call<Void> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(AdminReviewModerationActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 }

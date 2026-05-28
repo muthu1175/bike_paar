@@ -90,6 +90,7 @@ urlpatterns = [
     path('admin/feedback/reply/', AdminReplyFeedbackAPIView.as_view(), name='admin-feedback-reply'),
     path('admin/dashboard-stats/', AdminDashboardStatsAPIView.as_view(), name='admin-dashboard-stats'),
     path('admin/bike-reviews/', AdminBikeReviewAPIView.as_view(), name='admin-bike-reviews'),
+    path('admin/bike-reviews/<int:pk>/', AdminBikeReviewDetailAPIView.as_view(), name='admin-bike-reviews-detail'),
     path('admin/bikes/', AdminBikeAPIView.as_view()),
     path('admin/bikes/<str:model_name>/', AdminBikeAPIView.as_view()),
     path('app-status/', MaintenanceStatusAPIView.as_view()),

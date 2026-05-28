@@ -57,6 +57,16 @@
                     android:textStyle="bold"/>
             </LinearLayout>
             
+            <ImageView
+                android:id="@+id/ivDelete"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_delete"
+                app:tint="#D32F2F"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp" />
+                
             <TextView
                 android:id="@+id/tvBikeModel"
                 android:layout_width="wrap_content"
@@ -69,7 +79,7 @@
                 android:backgroundTint="#F0E8E4"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:layout_alignParentRight="true"
+                android:layout_toLeftOf="@id/ivDelete"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
         
